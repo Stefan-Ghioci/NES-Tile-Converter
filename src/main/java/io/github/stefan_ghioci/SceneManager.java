@@ -2,11 +2,11 @@ package io.github.stefan_ghioci;
 
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.StringJoiner;
 
@@ -21,6 +21,7 @@ public class SceneManager
 
     private SceneManager()
     {
+        throw new UnsupportedOperationException("Static class should not be instantiated.");
     }
 
     public static void setStage(Stage stage)
@@ -36,15 +37,15 @@ public class SceneManager
     public static void start()
     {
         LOGGER.info("Starting first step");
-        currentStep = stepList.get(0);
-        loadCurrentStep();
-    }
 
-    private static void loadCurrentStep()
-    {
+        Image image = ImageManager.loadDefault();
+        currentStep = stepList.get(0);
+
         LOGGER.info("Progress status: {}", getProgressStatusFormattedString());
 
-        currentStep.initializeView(getProgressStatusFormattedString());
+
+
+        currentStep.initializeView(getProgressStatusFormattedString(), image);
 
         Parent root = currentStep.getViewRoot();
         Scene scene = new Scene(root, 800, 600);
@@ -52,6 +53,7 @@ public class SceneManager
         stage.setScene(scene);
         stage.show();
     }
+
 
     private static String getProgressStatusFormattedString()
     {
@@ -68,9 +70,22 @@ public class SceneManager
     public static void goToNextStep()
     {
         LOGGER.info("Loading next step...");
+
+        Image image = currentStep.getImage();
+        ImageManager.save(currentStep, image);
+
         currentStep = stepList.get(stepList.indexOf(currentStep) + 1);
 
-        loadCurrentStep();
+        LOGGER.info("Progress status: {}", getProgressStatusFormattedString());
+
+
+        currentStep.initializeView(getProgressStatusFormattedString(), image);
+
+        Parent root = currentStep.getViewRoot();
+        Scene scene = new Scene(root, 800, 600);
+
+        stage.setScene(scene);
+        stage.show();
     }
 
     public static void goToPreviousStep()
@@ -78,13 +93,25 @@ public class SceneManager
         LOGGER.info("Loading previous step...");
         currentStep = stepList.get(stepList.indexOf(currentStep) - 1);
 
-        loadCurrentStep();
+
+        LOGGER.info("Progress status: {}", getProgressStatusFormattedString());
+
+
+        Image image = ImageManager.restore(currentStep);
+        currentStep.initializeView(getProgressStatusFormattedString(), image);
+
+        Parent root = currentStep.getViewRoot();
+        Scene scene = new Scene(root, 800, 600);
+
+        stage.setScene(scene);
+        stage.show();
     }
 
 
     public static void reset()
     {
         LOGGER.info("Resetting all steps...");
+        ImageManager.wipe();
         start();
     }
 }

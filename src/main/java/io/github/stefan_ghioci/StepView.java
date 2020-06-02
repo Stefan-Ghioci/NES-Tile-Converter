@@ -1,36 +1,52 @@
 package io.github.stefan_ghioci;
 
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 
 public class StepView
 {
 
     private final StepController controller;
     private BorderPane root;
+    private ImageView imageView;
 
     public StepView(StepController controller)
     {
         this.controller = controller;
     }
 
-    public void initialize(String progressStatus, StepType type)
+    public void initialize(String progressStatus, StepType type, Image image)
     {
         root = new BorderPane();
 
         initializeTop(progressStatus);
+        initializeCenter(image);
         initializeBottom(type);
 
+    }
+
+    private void initializeCenter(Image image)
+    {
+        imageView = new ImageView();
+
+        imageView.setImage(image);
+        imageView.setSmooth(false);
+
+        root.setCenter(imageView);
     }
 
     private void initializeTop(String progressStatus)
     {
         Text progressStatusText = new Text(progressStatus);
+
+        progressStatusText.setTextAlignment(TextAlignment.LEFT);
 
         root.setTop(progressStatusText);
     }
@@ -46,8 +62,8 @@ public class StepView
                 break;
             case STANDARD:
                 buttonBox.getChildren().add(createBackButton());
-                buttonBox.getChildren().add(createResetButton());
                 buttonBox.getChildren().add(createNextButton());
+                buttonBox.getChildren().add(createResetButton());
                 break;
             case FINAL:
                 buttonBox.getChildren().add(createBackButton());
@@ -95,5 +111,10 @@ public class StepView
     public Parent getRoot()
     {
         return root;
+    }
+
+    public Image getImage()
+    {
+        return imageView.getImage();
     }
 }
