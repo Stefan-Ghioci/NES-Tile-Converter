@@ -1,6 +1,8 @@
-package io.github.stefan_ghioci;
+package io.github.stefan_ghioci.navigation.base;
 
-public class StepController
+import io.github.stefan_ghioci.state.SceneManager;
+
+public abstract class StepController
 {
 
     private StepView view;
@@ -14,7 +16,7 @@ public class StepController
         this.view = view;
     }
 
-    public void handleNavigation(Navigation option)
+    public void handleNavigation(ButtonType option)
     {
         switch (option)
         {

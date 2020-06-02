@@ -1,5 +1,6 @@
-package io.github.stefan_ghioci;
+package io.github.stefan_ghioci.state;
 
+import io.github.stefan_ghioci.navigation.base.Step;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;

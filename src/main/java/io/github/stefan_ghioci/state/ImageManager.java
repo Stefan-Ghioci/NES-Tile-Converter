@@ -1,5 +1,6 @@
-package io.github.stefan_ghioci;
+package io.github.stefan_ghioci.state;
 
+import io.github.stefan_ghioci.navigation.base.Step;
 import javafx.scene.image.Image;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,6 +46,6 @@ public class ImageManager
     public static Image loadDefault()
     {
         LOGGER.info("Loading default...");
-        return new Image(ImageManager.class.getResourceAsStream("assets/image_placeholder.bmp"));
+        return new Image(ImageManager.class.getResourceAsStream("image_placeholder.bmp"));
     }
 }

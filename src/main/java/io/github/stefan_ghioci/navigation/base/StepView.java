@@ -1,4 +1,4 @@
-package io.github.stefan_ghioci;
+package io.github.stefan_ghioci.navigation.base;
 
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -10,7 +10,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
-public class StepView
+public abstract class StepView
 {
 
     private final StepController controller;
@@ -22,13 +22,13 @@ public class StepView
         this.controller = controller;
     }
 
-    public void initialize(String progressStatus, StepType type, Image image)
+    public void initialize(String progressStatus, Phase phase, Image image)
     {
         root = new BorderPane();
 
         initializeTop(progressStatus);
         initializeCenter(image);
-        initializeBottom(type);
+        initializeBottom(phase);
 
     }
 
@@ -51,7 +51,7 @@ public class StepView
         root.setTop(progressStatusText);
     }
 
-    private void initializeBottom(StepType type)
+    private void initializeBottom(Phase type)
     {
         HBox buttonBox = new HBox();
 
@@ -81,7 +81,7 @@ public class StepView
     {
         Button button = new Button();
 
-        button.setOnAction(event -> controller.handleNavigation(Navigation.BACK));
+        button.setOnAction(event -> controller.handleNavigation(ButtonType.BACK));
         button.setText("Back");
 
         return button;
@@ -91,7 +91,7 @@ public class StepView
     {
         Button button = new Button();
 
-        button.setOnAction(event -> controller.handleNavigation(Navigation.RESET));
+        button.setOnAction(event -> controller.handleNavigation(ButtonType.RESET));
         button.setText("Reset");
 
         return button;
@@ -101,7 +101,7 @@ public class StepView
     {
         Button button = new Button();
 
-        button.setOnAction(event -> controller.handleNavigation(Navigation.NEXT));
+        button.setOnAction(event -> controller.handleNavigation(ButtonType.NEXT));
         button.setText("Next");
 
         return button;
