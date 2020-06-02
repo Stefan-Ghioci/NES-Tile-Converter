@@ -13,8 +13,8 @@ import javafx.scene.text.TextAlignment;
 public abstract class StepView
 {
 
-    private final StepController controller;
-    private BorderPane root;
+    protected final StepController controller;
+    protected BorderPane root;
     private ImageView imageView;
 
     public StepView(StepController controller)
@@ -122,5 +122,10 @@ public abstract class StepView
     public Image getImage()
     {
         return imageView.getImage();
+    }
+
+    public void setImage(Image image)
+    {
+        imageView.setImage(image);
     }
 }

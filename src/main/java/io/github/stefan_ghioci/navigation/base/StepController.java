@@ -5,7 +5,7 @@ import io.github.stefan_ghioci.state.SceneManager;
 public abstract class StepController
 {
 
-    private StepView view;
+    protected StepView view;
 
     public StepController()
     {
