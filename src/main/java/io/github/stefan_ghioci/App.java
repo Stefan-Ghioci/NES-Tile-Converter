@@ -19,7 +19,7 @@ public class App extends Application
         initializeStage(stage);
 
         List<Step> steps = new StepBuilder()
-                .addLoadImageStep()
+                .addImageLoadStep()
                 .addPreProcessingStep()
                 .addReconstructionStep()
                 .addCompressionStep()

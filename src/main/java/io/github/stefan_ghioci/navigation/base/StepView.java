@@ -29,8 +29,14 @@ public abstract class StepView
         initializeTop(progressStatus);
         initializeCenter(image);
         initializeBottom(phase);
+        initializeLeft();
+        initializeRight();
 
     }
+
+    protected abstract void initializeLeft();
+
+    protected abstract void initializeRight();
 
     private void initializeCenter(Image image)
     {
