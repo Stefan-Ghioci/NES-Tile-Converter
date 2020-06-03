@@ -1,6 +1,6 @@
 package io.github.stefan_ghioci.navigation.base;
 
-import io.github.stefan_ghioci.state.SceneManager;
+import io.github.stefan_ghioci.state.StepSceneManager;
 
 public abstract class StepController
 {
@@ -21,13 +21,13 @@ public abstract class StepController
         switch (option)
         {
             case BACK:
-                SceneManager.goToPreviousStep();
+                StepSceneManager.goToPreviousStep();
                 break;
             case NEXT:
-                SceneManager.goToNextStep();
+                StepSceneManager.goToNextStep();
                 break;
             case RESET:
-                SceneManager.reset();
+                StepSceneManager.reset();
                 break;
         }
     }

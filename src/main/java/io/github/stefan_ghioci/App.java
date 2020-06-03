@@ -2,7 +2,7 @@ package io.github.stefan_ghioci;
 
 import io.github.stefan_ghioci.navigation.StepBuilder;
 import io.github.stefan_ghioci.navigation.base.Step;
-import io.github.stefan_ghioci.state.SceneManager;
+import io.github.stefan_ghioci.state.StepSceneManager;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -26,9 +26,9 @@ public class App extends Application
                 .addFinalResultStep()
                 .build();
 
-        SceneManager.setStage(stage);
-        SceneManager.setSteps(steps);
-        SceneManager.start();
+        StepSceneManager.setStage(stage);
+        StepSceneManager.setSteps(steps);
+        StepSceneManager.start();
     }
 
 

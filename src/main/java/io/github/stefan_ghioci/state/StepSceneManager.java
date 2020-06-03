@@ -11,23 +11,23 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.StringJoiner;
 
-public class SceneManager
+public class StepSceneManager
 {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SceneManager.class.getSimpleName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(StepSceneManager.class.getSimpleName());
     private static Stage stage;
 
     static List<Step> stepList;
     static Step currentStep;
 
-    private SceneManager()
+    private StepSceneManager()
     {
         throw new UnsupportedOperationException("Static class should not be instantiated.");
     }
 
     public static void setStage(Stage stage)
     {
-        SceneManager.stage = stage;
+        StepSceneManager.stage = stage;
     }
 
     public static void setSteps(List<Step> steps)
@@ -39,7 +39,7 @@ public class SceneManager
     {
         LOGGER.info("Starting first step");
 
-        Image image = ImageManager.loadDefault();
+        Image image = ImageStateManager.loadDefault();
         currentStep = stepList.get(0);
 
         LOGGER.info("Progress status: {}", getProgressStatusFormattedString());
@@ -73,7 +73,7 @@ public class SceneManager
         LOGGER.info("Loading next step...");
 
         Image image = currentStep.getImage();
-        ImageManager.save(currentStep, image);
+        ImageStateManager.save(currentStep, image);
 
         currentStep = stepList.get(stepList.indexOf(currentStep) + 1);
 
@@ -98,7 +98,7 @@ public class SceneManager
         LOGGER.info("Progress status: {}", getProgressStatusFormattedString());
 
 
-        Image image = ImageManager.restore(currentStep);
+        Image image = ImageStateManager.restore(currentStep);
         currentStep.initializeView(getProgressStatusFormattedString(), image);
 
         Parent root = currentStep.getViewRoot();
@@ -112,7 +112,7 @@ public class SceneManager
     public static void reset()
     {
         LOGGER.info("Resetting all steps...");
-        ImageManager.wipe();
+        ImageStateManager.wipe();
         start();
     }
 }

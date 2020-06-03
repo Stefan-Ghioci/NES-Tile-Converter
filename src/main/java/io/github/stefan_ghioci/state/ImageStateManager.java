@@ -8,13 +8,13 @@ import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ImageManager
+public class ImageStateManager
 {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ImageManager.class.getSimpleName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(ImageStateManager.class.getSimpleName());
 
     private static final Map<Step, Image> states = new HashMap<>();
 
-    private ImageManager()
+    private ImageStateManager()
     {
         throw new UnsupportedOperationException("Static class should not be instantiated.");
     }
@@ -46,6 +46,6 @@ public class ImageManager
     public static Image loadDefault()
     {
         LOGGER.info("Loading default...");
-        return new Image(ImageManager.class.getResourceAsStream("image_placeholder.bmp"));
+        return new Image(ImageStateManager.class.getResourceAsStream("image_placeholder.bmp"));
     }
 }

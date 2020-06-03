@@ -1,0 +1,3 @@
+The image size does not fit tile division constraints.
+Width and height must both be divisible by 16.
+(recommended size - 256x240)
