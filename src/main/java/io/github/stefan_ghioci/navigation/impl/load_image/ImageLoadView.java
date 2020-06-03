@@ -2,10 +2,13 @@ package io.github.stefan_ghioci.navigation.impl.load_image;
 
 import io.github.stefan_ghioci.navigation.base.StepView;
 import javafx.scene.control.Button;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 
 public class ImageLoadView extends StepView
 {
     private final ImageLoadController controller;
+    Button loadImageButton;
 
     public ImageLoadView(ImageLoadController controller)
     {
@@ -14,19 +17,18 @@ public class ImageLoadView extends StepView
     }
 
     @Override
-    protected void initializeLeft()
+    protected Pane initializeLeftPane()
     {
-        Button loadImageButton = new Button();
-
+        loadImageButton = new Button();
         loadImageButton.setText("Load Image...");
         loadImageButton.setOnAction(event -> controller.handleImageLoad());
 
-        root.setLeft(loadImageButton);
+        return new StackPane(loadImageButton);
     }
 
     @Override
-    protected void initializeRight()
+    protected Pane initializeRightPane()
     {
-
+        return null;
     }
 }

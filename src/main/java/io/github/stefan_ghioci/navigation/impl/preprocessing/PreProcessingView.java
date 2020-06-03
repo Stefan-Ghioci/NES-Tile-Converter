@@ -10,6 +10,7 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -33,21 +34,19 @@ public class PreProcessingView extends StepView
     }
 
     @Override
-    protected void initializeLeft()
+    protected Pane initializeLeftPane()
     {
 
+        return null;
     }
 
     @Override
-    protected void initializeRight()
+    protected Pane initializeRightPane()
     {
         paletteSizeText = new Text("Palette size: 0");
 
         palette = FXCollections.observableArrayList();
-        palette.addListener((ListChangeListener<? super Color>) event ->
-        {
-            controller.handlePaletteChanged();
-        });
+        palette.addListener((ListChangeListener<? super Color>) event -> controller.handlePaletteChanged());
 
         paletteListView = new ListView<>();
         paletteListView.setItems(palette);
@@ -71,8 +70,7 @@ public class PreProcessingView extends StepView
         deleteButton.setDisable(true);
 
         HBox topBox = new HBox(colorPicker, addButton, deleteButton);
-        VBox mainBox = new VBox(topBox, paletteListView, paletteSizeText);
 
-        root.setRight(mainBox);
+        return new VBox(topBox, paletteListView, paletteSizeText);
     }
 }

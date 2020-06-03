@@ -1,7 +1,7 @@
 package io.github.stefan_ghioci.navigation.impl.compression;
 
 import io.github.stefan_ghioci.navigation.base.StepView;
-import io.github.stefan_ghioci.navigation.impl.compression.CompressionController;
+import javafx.scene.layout.Pane;
 
 public class CompressionView extends StepView
 {
@@ -11,14 +11,16 @@ public class CompressionView extends StepView
     }
 
     @Override
-    protected void initializeLeft()
+    protected Pane initializeLeftPane()
     {
 
+        return null;
     }
 
     @Override
-    protected void initializeRight()
+    protected Pane initializeRightPane()
     {
 
+        return null;
     }
 }

@@ -1,7 +1,7 @@
 package io.github.stefan_ghioci.navigation.impl.reconstruction;
 
-import io.github.stefan_ghioci.navigation.base.StepController;
 import io.github.stefan_ghioci.navigation.base.StepView;
+import javafx.scene.layout.Pane;
 
 public class ReconstructionView extends StepView
 {
@@ -11,14 +11,16 @@ public class ReconstructionView extends StepView
     }
 
     @Override
-    protected void initializeLeft()
+    protected Pane initializeLeftPane()
     {
 
+        return null;
     }
 
     @Override
-    protected void initializeRight()
+    protected Pane initializeRightPane()
     {
 
+        return null;
     }
 }

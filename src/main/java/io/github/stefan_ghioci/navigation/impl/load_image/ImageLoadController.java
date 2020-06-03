@@ -34,7 +34,7 @@ public class ImageLoadController extends StepController
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("BMP", "*.bmp"));
-        File file = fileChooser.showOpenDialog(stepView.getRoot().getScene().getWindow());
+        File file = fileChooser.showOpenDialog(view.getRoot().getScene().getWindow());
 
         LOGGER.info("Validating chosen file...");
 
@@ -44,7 +44,7 @@ public class ImageLoadController extends StepController
         if (isValid)
         {
             LOGGER.info("Image is valid, replacing previous image...");
-            stepView.setImage(image);
+            view.setImage(image);
         }
         else
         {

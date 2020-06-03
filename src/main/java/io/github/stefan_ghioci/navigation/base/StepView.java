@@ -6,7 +6,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 
 public abstract class StepView
 {
@@ -24,36 +27,35 @@ public abstract class StepView
     {
         root = new BorderPane();
 
-        initializeTop(progressStatus);
-        initializeCenter(image);
-        initializeBottom(phase);
-        initializeLeft();
-        initializeRight();
+
+        root.setTop(initializeTopPane(progressStatus));
+        root.setCenter(initializeCenterPane(image));
+        root.setBottom(initializeBottomPane(phase));
+        root.setLeft(initializeLeftPane());
+        root.setRight(initializeRightPane());
 
     }
 
-    protected abstract void initializeLeft();
+    protected abstract Pane initializeLeftPane();
 
-    protected abstract void initializeRight();
+    protected abstract Pane initializeRightPane();
 
-    private void initializeCenter(Image image)
+    private Pane initializeCenterPane(Image image)
     {
         imageView = new ImageView();
-
         imageView.setImage(image);
         imageView.setSmooth(false);
 
-        root.setCenter(imageView);
+        return new StackPane(imageView);
     }
 
-    private void initializeTop(String progressStatus)
+    private Pane initializeTopPane(String progressStatus)
     {
         Text progressStatusText = new Text(progressStatus);
-
-        root.setTop(progressStatusText);
+        return new TextFlow(progressStatusText);
     }
 
-    private void initializeBottom(Phase type)
+    private Pane initializeBottomPane(Phase type)
     {
         HBox buttonBox = new HBox();
 
@@ -73,7 +75,7 @@ public abstract class StepView
                 break;
         }
 
-        root.setBottom(buttonBox);
+        return buttonBox;
     }
 
 

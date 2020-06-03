@@ -1,6 +1,7 @@
 package io.github.stefan_ghioci.navigation.impl.final_result;
 
 import io.github.stefan_ghioci.navigation.base.StepView;
+import javafx.scene.layout.Pane;
 
 public class FinalResultStepView extends StepView
 {
@@ -10,14 +11,16 @@ public class FinalResultStepView extends StepView
     }
 
     @Override
-    protected void initializeLeft()
+    protected Pane initializeLeftPane()
     {
-        
+
+        return null;
     }
 
     @Override
-    protected void initializeRight()
+    protected Pane initializeRightPane()
     {
 
+        return null;
     }
 }
