@@ -73,7 +73,7 @@ public class FXTools
 
     private static String getColorCode(javafx.scene.paint.Color color)
     {
-        return "#" + color.toString().substring(3, 9);
+        return "#" + color.toString().substring(2, 8);
     }
 
     public static List<javafx.scene.paint.Color> colorListToFXColorList(List<Color> colors)
