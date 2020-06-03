@@ -2,9 +2,9 @@ package io.github.stefan_ghioci.navigation.impl.preprocessing;
 
 import io.github.stefan_ghioci.navigation.base.StepController;
 import io.github.stefan_ghioci.navigation.base.StepView;
-import javafx.scene.paint.Color;
-
-import java.util.Comparator;
+import io.github.stefan_ghioci.processing.PreProcessing;
+import io.github.stefan_ghioci.tools.FXTools;
+import io.github.stefan_ghioci.tools.FileTools;
 
 public class PreProcessingController extends StepController
 {
@@ -20,13 +20,11 @@ public class PreProcessingController extends StepController
     public void handleAddPickedColor()
     {
         view.palette.add(view.colorPicker.getValue());
-        view.palette.sort(Comparator.comparingDouble(Color::getHue));
     }
 
     public void handleDeleteSelectedColor()
     {
         view.palette.remove(view.paletteListView.getSelectionModel().getSelectedItem());
-        view.palette.sort(Comparator.comparing(Color::toString));
     }
 
     public void handleAddButtonStatus()
@@ -44,5 +42,15 @@ public class PreProcessingController extends StepController
     {
         view.paletteSizeText.setText("Palette size: " + view.palette.size());
         handleAddButtonStatus();
+    }
+
+    public void handleLoadNESPalette()
+    {
+        view.palette.setAll(FXTools.colorListToFXColorList(FileTools.loadNESPalette()));
+    }
+
+    public void handleLoadBestPalette()
+    {
+        view.palette.setAll(FXTools.colorListToFXColorList(PreProcessing.computeBestPalette(FXTools.getColorMatrix(view.getImage()))));
     }
 }

@@ -3,21 +3,21 @@ package io.github.stefan_ghioci.model;
 
 import java.util.Objects;
 
-public class Pixel
+public class Color
 {
     private final int red;
 
     private final int blue;
     private final int green;
 
-    public Pixel(int red, int green, int blue)
+    public Color(int red, int green, int blue)
     {
         this.red = red;
         this.green = green;
         this.blue = blue;
     }
 
-    public Pixel(int rgb)
+    public Color(int rgb)
     {
 
         this.red = (rgb & 0xff0000) >> 16;
@@ -25,16 +25,16 @@ public class Pixel
         this.blue = rgb & 0xff;
     }
 
-    public static Pixel black()
+    public static Color black()
     {
-        return new Pixel(0, 0, 0);
+        return new Color(0, 0, 0);
     }
 
-    public static Pixel difference(Pixel oldPixel, Pixel newPixel)
+    public static Color difference(Color oldColor, Color newColor)
     {
-        return new Pixel(oldPixel.red - newPixel.red,
-                              oldPixel.green - newPixel.green,
-                              oldPixel.blue - newPixel.blue);
+        return new Color(oldColor.red - newColor.red,
+                         oldColor.green - newColor.green,
+                         oldColor.blue - newColor.blue);
     }
 
     @Override
@@ -42,7 +42,7 @@ public class Pixel
     {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Pixel that = (Pixel) o;
+        Color that = (Color) o;
         return red == that.red &&
                 blue == that.blue &&
                 green == that.green;
@@ -78,8 +78,4 @@ public class Pixel
         return green;
     }
 
-    public int getLuminance()
-    {
-        return (int) (0.2126 * red + 0.7152 * green + 0.0722 * blue);
-    }
 }

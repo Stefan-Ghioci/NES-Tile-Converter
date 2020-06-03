@@ -2,6 +2,7 @@ package io.github.stefan_ghioci.navigation.impl.preprocessing;
 
 import io.github.stefan_ghioci.navigation.base.StepView;
 import io.github.stefan_ghioci.tools.FXTools;
+import io.github.stefan_ghioci.tools.FileTools;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -26,6 +27,8 @@ public class PreProcessingView extends StepView
     Button deleteButton;
     Button addButton;
     Text paletteSizeText;
+    Button loadNESPaletteButton;
+    Button loadBestPaletteButton;
 
     public PreProcessingView(PreProcessingController controller)
     {
@@ -36,8 +39,15 @@ public class PreProcessingView extends StepView
     @Override
     protected Pane initializeLeftPane()
     {
+        loadNESPaletteButton = new Button();
+        loadNESPaletteButton.setOnAction(event -> controller.handleLoadNESPalette());
+        loadNESPaletteButton.setText("Load NES Palette");
 
-        return null;
+        loadBestPaletteButton = new Button();
+        loadBestPaletteButton.setOnAction(event -> controller.handleLoadBestPalette());
+        loadBestPaletteButton.setText("Load Best Palette");
+
+        return new VBox(loadNESPaletteButton);
     }
 
     @Override
@@ -60,7 +70,7 @@ public class PreProcessingView extends StepView
 
         colorPicker = new ColorPicker();
         colorPicker.setOnAction(event -> controller.handleAddButtonStatus());
-        colorPicker.getCustomColors().addAll(FXTools.getNESPalette());
+        colorPicker.getCustomColors().addAll(FXTools.colorListToFXColorList(FileTools.loadNESPalette()));
 
         addButton = new Button("Add");
         addButton.setOnAction(event -> controller.handleAddPickedColor());

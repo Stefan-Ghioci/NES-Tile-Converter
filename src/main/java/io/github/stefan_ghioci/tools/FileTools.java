@@ -1,10 +1,13 @@
 package io.github.stefan_ghioci.tools;
 
-import io.github.stefan_ghioci.model.Pixel;
+import io.github.stefan_ghioci.model.Color;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -14,6 +17,8 @@ import java.util.Scanner;
 public class FileTools
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(FileTools.class.getSimpleName());
+
+    private static List<Color> nesPalette;
 
     public static String loadText(String code)
     {
@@ -33,12 +38,15 @@ public class FileTools
         }
     }
 
-    public static List<Pixel> loadNESPalette()
+    public static List<Color> loadNESPalette()
     {
+        if (nesPalette != null)
+            return nesPalette;
+
         LOGGER.info("Loading NES Palette...");
 
         InputStream resourceAsStream = FileTools.class.getResourceAsStream("nes_palette.csv");
-        List<Pixel> palette = new ArrayList<>();
+        List<Color> palette = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(resourceAsStream)))
         {
@@ -52,14 +60,17 @@ public class FileTools
                 int green = Integer.parseInt(rgb[1]);
                 int blue = Integer.parseInt(rgb[2]);
 
-                palette.add(new Pixel(red, green, blue));
+                palette.add(new Color(red, green, blue));
             }
         }
         catch (IOException e)
         {
             LOGGER.error("Failed to load NES palette file. Cause: {}", e.getMessage());
         }
+
+        nesPalette = palette;
         LOGGER.info("Loaded {}-color palette", palette.size());
+
         return palette;
     }
 }

@@ -1,12 +1,11 @@
 package io.github.stefan_ghioci.tools;
 
-import io.github.stefan_ghioci.model.Pixel;
+import io.github.stefan_ghioci.model.Color;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 import javafx.scene.layout.Region;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import org.slf4j.Logger;
@@ -19,20 +18,20 @@ public class FXTools
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(FXTools.class.getSimpleName());
 
-    public static Pixel[][] getPixelMatrix(Image image)
+    public static Color[][] getColorMatrix(Image image)
     {
         int width = (int) image.getWidth();
         int height = (int) image.getHeight();
-        Pixel[][] pixelMatrix = new Pixel[width][height];
+        Color[][] colorMatrix = new Color[width][height];
 
         PixelReader pixelReader = image.getPixelReader();
         for (int y = 0; y < height; y++)
             for (int x = 0; x < width; x++)
             {
-                pixelMatrix[x][y] = new Pixel(pixelReader.getArgb(x, y));
+                colorMatrix[x][y] = new Color(pixelReader.getArgb(x, y));
             }
 
-        return pixelMatrix;
+        return colorMatrix;
     }
 
     public static void showAlert(String title, String message, Alert.AlertType type)
@@ -46,12 +45,12 @@ public class FXTools
         alert.showAndWait();
     }
 
-    public static ListCell<Color> createColorListCell()
+    public static ListCell<javafx.scene.paint.Color> createColorListCell()
     {
         return new ListCell<>()
         {
             @Override
-            protected void updateItem(Color color, boolean empty)
+            protected void updateItem(javafx.scene.paint.Color color, boolean empty)
             {
                 super.updateItem(color, empty);
                 if (!empty)
@@ -72,25 +71,24 @@ public class FXTools
         };
     }
 
-    private static String getColorCode(Color color)
+    private static String getColorCode(javafx.scene.paint.Color color)
     {
         return "#" + color.toString().substring(3, 9);
     }
 
-    public static List<Color> getNESPalette()
+    public static List<javafx.scene.paint.Color> colorListToFXColorList(List<Color> colors)
     {
-        return FileTools.loadNESPalette()
-                        .stream()
-                        .map(FXTools::pixelToColor)
-                        .collect(Collectors.toList());
+        return colors.stream()
+                     .map(FXTools::fxColorToColor)
+                     .collect(Collectors.toList());
     }
 
-    private static Color pixelToColor(Pixel pixel)
+    private static javafx.scene.paint.Color fxColorToColor(Color color)
     {
-        double red = pixel.getRed() / 255.0F;
-        double green = pixel.getGreen() / 255.0F;
-        double blue = pixel.getBlue() / 255.0F;
+        double red = color.getRed() / 255.0F;
+        double green = color.getGreen() / 255.0F;
+        double blue = color.getBlue() / 255.0F;
 
-        return new Color(red, green, blue, 1.0F);
+        return new javafx.scene.paint.Color(red, green, blue, 1.0F);
     }
 }
