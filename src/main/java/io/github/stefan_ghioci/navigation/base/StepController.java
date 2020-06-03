@@ -5,7 +5,7 @@ import io.github.stefan_ghioci.state.StepSceneManager;
 public abstract class StepController
 {
 
-    protected StepView view;
+    protected StepView stepView;
 
     public StepController()
     {
@@ -13,7 +13,7 @@ public abstract class StepController
 
     public void setView(StepView view)
     {
-        this.view = view;
+        this.stepView = view;
     }
 
     public void handleNavigation(ButtonType option)

@@ -1,9 +1,10 @@
 package io.github.stefan_ghioci.navigation.impl.load_image;
 
 import io.github.stefan_ghioci.navigation.base.StepController;
+import io.github.stefan_ghioci.navigation.base.StepView;
 import io.github.stefan_ghioci.processing.ConstraintValidator;
-import io.github.stefan_ghioci.utils.FXUtils;
-import io.github.stefan_ghioci.utils.StringUtils;
+import io.github.stefan_ghioci.tools.FXTools;
+import io.github.stefan_ghioci.tools.FileTools;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
@@ -15,6 +16,17 @@ import java.io.File;
 public class ImageLoadController extends StepController
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(ImageLoadController.class.getSimpleName());
+    private ImageLoadView view;
+
+
+    @Override
+    public void setView(StepView stepView)
+    {
+        super.setView(stepView);
+        this.view = (ImageLoadView) stepView;
+    }
+
+
 
     public void handleImageLoad()
     {
@@ -22,7 +34,7 @@ public class ImageLoadController extends StepController
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("BMP", "*.bmp"));
-        File file = fileChooser.showOpenDialog(view.getRoot().getScene().getWindow());
+        File file = fileChooser.showOpenDialog(stepView.getRoot().getScene().getWindow());
 
         LOGGER.info("Validating chosen file...");
 
@@ -32,13 +44,13 @@ public class ImageLoadController extends StepController
         if (isValid)
         {
             LOGGER.info("Image is valid, replacing previous image...");
-            view.setImage(image);
+            stepView.setImage(image);
         }
         else
         {
             LOGGER.info("Invalid image, showing error message...");
-            FXUtils.showAlert("Validation Error",
-                              StringUtils.loadText("invalid_size"),
+            FXTools.showAlert("Validation Error",
+                              FileTools.loadText("invalid_size"),
                               Alert.AlertType.ERROR);
         }
     }

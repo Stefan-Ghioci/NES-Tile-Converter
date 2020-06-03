@@ -5,9 +5,12 @@ import javafx.scene.control.Button;
 
 public class ImageLoadView extends StepView
 {
+    private final ImageLoadController controller;
+
     public ImageLoadView(ImageLoadController controller)
     {
         super(controller);
+        this.controller = ((ImageLoadController) stepController);
     }
 
     @Override
@@ -16,8 +19,7 @@ public class ImageLoadView extends StepView
         Button loadImageButton = new Button();
 
         loadImageButton.setText("Load Image...");
-        loadImageButton.setOnAction(event -> ((ImageLoadController) controller).handleImageLoad());
-
+        loadImageButton.setOnAction(event -> controller.handleImageLoad());
 
         root.setLeft(loadImageButton);
     }

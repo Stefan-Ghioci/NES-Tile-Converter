@@ -2,7 +2,6 @@ package io.github.stefan_ghioci.navigation;
 
 import io.github.stefan_ghioci.navigation.base.Phase;
 import io.github.stefan_ghioci.navigation.base.Step;
-import io.github.stefan_ghioci.navigation.base.StepController;
 import io.github.stefan_ghioci.navigation.base.StepView;
 import io.github.stefan_ghioci.navigation.impl.compression.CompressionController;
 import io.github.stefan_ghioci.navigation.impl.compression.CompressionView;

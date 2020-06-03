@@ -7,18 +7,17 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 
 public abstract class StepView
 {
 
-    protected final StepController controller;
+    protected final StepController stepController;
     protected BorderPane root;
     private ImageView imageView;
 
-    public StepView(StepController controller)
+    public StepView(StepController stepController)
     {
-        this.controller = controller;
+        this.stepController = stepController;
     }
 
     public void initialize(String progressStatus, Phase phase, Image image)
@@ -82,7 +81,7 @@ public abstract class StepView
     {
         Button button = new Button();
 
-        button.setOnAction(event -> controller.handleNavigation(ButtonType.BACK));
+        button.setOnAction(event -> stepController.handleNavigation(ButtonType.BACK));
         button.setText("Back");
 
         return button;
@@ -92,7 +91,7 @@ public abstract class StepView
     {
         Button button = new Button();
 
-        button.setOnAction(event -> controller.handleNavigation(ButtonType.RESET));
+        button.setOnAction(event -> stepController.handleNavigation(ButtonType.RESET));
         button.setText("Reset");
 
         return button;
@@ -102,7 +101,7 @@ public abstract class StepView
     {
         Button button = new Button();
 
-        button.setOnAction(event -> controller.handleNavigation(ButtonType.NEXT));
+        button.setOnAction(event -> stepController.handleNavigation(ButtonType.NEXT));
         button.setText("Next");
 
         return button;
