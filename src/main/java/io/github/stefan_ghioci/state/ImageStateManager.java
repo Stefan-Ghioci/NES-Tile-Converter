@@ -31,7 +31,7 @@ public class ImageStateManager
         states.clear();
     }
 
-    public static Image restore(Step step)
+    public static Image load(Step step)
     {
 
         if (states.get(step) == null)

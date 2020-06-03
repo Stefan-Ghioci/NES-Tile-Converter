@@ -15,10 +15,9 @@ public class StepSceneManager
 {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(StepSceneManager.class.getSimpleName());
-    private static Stage stage;
-
     static List<Step> stepList;
     static Step currentStep;
+    private static Stage stage;
 
     private StepSceneManager()
     {
@@ -76,9 +75,8 @@ public class StepSceneManager
 
         ImageStateManager.clear(currentStep);
         currentStep = stepList.get(stepList.indexOf(currentStep) - 1);
+        Image image = ImageStateManager.load(currentStep);
 
-
-        Image image = ImageStateManager.restore(currentStep);
         loadScene(image);
     }
 
@@ -97,8 +95,11 @@ public class StepSceneManager
 
     public static void reset()
     {
-        LOGGER.info("Resetting all steps...");
-        ImageStateManager.wipe();
-        start();
+        LOGGER.info("Resetting current step...");
+
+        Step previousStep = stepList.get(stepList.indexOf(currentStep) - 1);
+        Image image = ImageStateManager.load(previousStep);
+
+        loadScene(image);
     }
 }

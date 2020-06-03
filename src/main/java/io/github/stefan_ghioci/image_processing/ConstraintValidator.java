@@ -1,4 +1,4 @@
-package io.github.stefan_ghioci.processing;
+package io.github.stefan_ghioci.image_processing;
 
 import javafx.scene.image.Image;
 

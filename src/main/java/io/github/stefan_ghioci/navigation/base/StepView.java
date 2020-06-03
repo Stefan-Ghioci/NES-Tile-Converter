@@ -17,6 +17,7 @@ public abstract class StepView
     protected final StepController stepController;
     protected BorderPane root;
     private ImageView imageView;
+    private Image initialImage;
 
     public StepView(StepController stepController)
     {
@@ -25,9 +26,9 @@ public abstract class StepView
 
     public void initialize(String progressStatus, Phase phase, Image image)
     {
+        initialImage = image;
+
         root = new BorderPane();
-
-
         root.setTop(initializeTopPane(progressStatus));
         root.setCenter(initializeCenterPane(image));
         root.setBottom(initializeBottomPane(phase));
@@ -123,5 +124,10 @@ public abstract class StepView
     public void setImage(Image image)
     {
         imageView.setImage(image);
+    }
+
+    public Image getInitialImage()
+    {
+        return initialImage;
     }
 }

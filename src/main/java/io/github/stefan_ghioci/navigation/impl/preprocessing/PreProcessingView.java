@@ -6,10 +6,7 @@ import io.github.stefan_ghioci.tools.FileTools;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Button;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -29,6 +26,8 @@ public class PreProcessingView extends StepView
     Text paletteSizeText;
     Button loadNESPaletteButton;
     Button loadBestPaletteButton;
+    ChoiceBox<String> ditheringChoiceBox;
+    Button quantizeButton;
 
     public PreProcessingView(PreProcessingController controller)
     {
@@ -47,7 +46,16 @@ public class PreProcessingView extends StepView
         loadBestPaletteButton.setOnAction(event -> controller.handleLoadBestPalette());
         loadBestPaletteButton.setText("Load Best Palette");
 
-        return new VBox(loadNESPaletteButton);
+        ditheringChoiceBox = new ChoiceBox<>();
+        ditheringChoiceBox.getItems().setAll(controller.getDitheringMethods());
+        ditheringChoiceBox.getSelectionModel().select(0);
+
+        quantizeButton = new Button();
+        quantizeButton.setOnAction(event -> controller.handleQuantization());
+        quantizeButton.setText("Quantize Image");
+        quantizeButton.setDisable(true);
+
+        return new VBox(loadNESPaletteButton, loadBestPaletteButton, ditheringChoiceBox, quantizeButton);
     }
 
     @Override

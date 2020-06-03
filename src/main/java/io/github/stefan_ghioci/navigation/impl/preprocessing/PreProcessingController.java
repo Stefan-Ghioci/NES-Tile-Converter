@@ -1,13 +1,23 @@
 package io.github.stefan_ghioci.navigation.impl.preprocessing;
 
+import io.github.stefan_ghioci.image_processing.Dithering;
+import io.github.stefan_ghioci.image_processing.PreProcessing;
+import io.github.stefan_ghioci.model.Color;
 import io.github.stefan_ghioci.navigation.base.StepController;
 import io.github.stefan_ghioci.navigation.base.StepView;
-import io.github.stefan_ghioci.processing.PreProcessing;
 import io.github.stefan_ghioci.tools.FXTools;
 import io.github.stefan_ghioci.tools.FileTools;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class PreProcessingController extends StepController
 {
+    private static final Logger LOGGER = LoggerFactory.getLogger(PreProcessingController.class.getSimpleName());
+
     private PreProcessingView view;
 
     @Override
@@ -19,7 +29,7 @@ public class PreProcessingController extends StepController
 
     public void handleAddPickedColor()
     {
-        view.palette.add(view.colorPicker.getValue());
+        view.palette.add(0, view.colorPicker.getValue());
     }
 
     public void handleDeleteSelectedColor()
@@ -40,7 +50,11 @@ public class PreProcessingController extends StepController
 
     public void handlePaletteChanged()
     {
-        view.paletteSizeText.setText("Palette size: " + view.palette.size());
+        int paletteSize = view.palette.size();
+
+        view.paletteSizeText.setText("Palette size: " + paletteSize);
+        view.quantizeButton.setDisable(paletteSize <= 1);
+
         handleAddButtonStatus();
     }
 
@@ -51,6 +65,24 @@ public class PreProcessingController extends StepController
 
     public void handleLoadBestPalette()
     {
-        view.palette.setAll(FXTools.colorListToFXColorList(PreProcessing.computeBestPalette(FXTools.getColorMatrix(view.getImage()))));
+        view.palette.setAll(FXTools.colorListToFXColorList(PreProcessing.computeBestPalette(FXTools.imageToColorMatrix(
+                view.getImage()))));
+    }
+
+    public List<String> getDitheringMethods()
+    {
+        return Stream.of(Dithering.Method.values())
+                     .map(Dithering.Method::name)
+                     .collect(Collectors.toList());
+    }
+
+    public void handleQuantization()
+    {
+        Color[][] colorMatrix = FXTools.imageToColorMatrix(view.getInitialImage());
+        List<Color> palette = FXTools.fxColorListToColorList(view.palette);
+        Dithering.Method ditheringMethod = Dithering.Method.valueOf(view.ditheringChoiceBox.getSelectionModel()
+                                                                                           .getSelectedItem());
+
+        view.setImage(FXTools.colorMatrixToImage(PreProcessing.quantize(colorMatrix, palette, ditheringMethod)));
     }
 }

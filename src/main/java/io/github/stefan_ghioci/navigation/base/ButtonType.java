@@ -4,5 +4,6 @@ public enum ButtonType
 {
     BACK,
     RESET,
-    NEXT
+    NEXT,
+    RESTORE
 }

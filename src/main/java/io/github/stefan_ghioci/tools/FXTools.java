@@ -5,6 +5,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
+import javafx.scene.image.PixelWriter;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.Region;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -18,7 +20,7 @@ public class FXTools
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(FXTools.class.getSimpleName());
 
-    public static Color[][] getColorMatrix(Image image)
+    public static Color[][] imageToColorMatrix(Image image)
     {
         int width = (int) image.getWidth();
         int height = (int) image.getHeight();
@@ -79,16 +81,63 @@ public class FXTools
     public static List<javafx.scene.paint.Color> colorListToFXColorList(List<Color> colors)
     {
         return colors.stream()
-                     .map(FXTools::fxColorToColor)
+                     .map(FXTools::colorToFXColor)
                      .collect(Collectors.toList());
     }
 
-    private static javafx.scene.paint.Color fxColorToColor(Color color)
+    public static javafx.scene.paint.Color colorToFXColor(Color color)
     {
         double red = color.getRed() / 255.0F;
         double green = color.getGreen() / 255.0F;
         double blue = color.getBlue() / 255.0F;
 
         return new javafx.scene.paint.Color(red, green, blue, 1.0F);
+    }
+
+    public static List<Color> fxColorListToColorList(List<javafx.scene.paint.Color> fxColors)
+    {
+        return fxColors.stream()
+                       .map(FXTools::fxColorToColor)
+                       .collect(Collectors.toList());
+    }
+
+    private static Color fxColorToColor(javafx.scene.paint.Color color)
+    {
+        int red = Math.toIntExact(Math.round(color.getRed() * 255.0F));
+        int green = Math.toIntExact(Math.round(color.getGreen() * 255.0F));
+        int blue = Math.toIntExact(Math.round(color.getBlue() * 255.0F));
+
+        return new Color(red, green, blue);
+    }
+
+    public static Image colorMatrixToImage(Color[][] colorMatrix)
+    {
+        int width = colorMatrix.length;
+        int height = colorMatrix[0].length;
+
+        WritableImage writableImage = new WritableImage(width, height);
+        PixelWriter pixelWriter = writableImage.getPixelWriter();
+
+        for (int y = 0; y < height; y++)
+            for (int x = 0; x < width; x++)
+                pixelWriter.setColor(x, y, colorToFXColor(colorMatrix[x][y]));
+
+        return writableImage;
+    }
+
+    public static Image cloneImage(Image image)
+    {
+        int height = (int) image.getHeight();
+        int width = (int) image.getWidth();
+
+        PixelReader pixelReader = image.getPixelReader();
+        WritableImage writableImage = new WritableImage(width, height);
+        PixelWriter pixelWriter = writableImage.getPixelWriter();
+
+        for (int y = 0; y < height; y++)
+            for (int x = 0; x < width; x++)
+                pixelWriter.setColor(x, y, pixelReader.getColor(x, y));
+
+        return writableImage;
     }
 }
