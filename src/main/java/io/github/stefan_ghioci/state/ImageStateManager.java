@@ -48,4 +48,10 @@ public class ImageStateManager
         LOGGER.info("Loading default...");
         return new Image(ImageStateManager.class.getResourceAsStream("image_placeholder.bmp"));
     }
+
+    public static void clear(Step step)
+    {
+        LOGGER.info("Clearing state for step {}", step.getDescription());
+        states.remove(step);
+    }
 }

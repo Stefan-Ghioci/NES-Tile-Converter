@@ -1,6 +1,5 @@
 package io.github.stefan_ghioci.navigation.base;
 
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -52,8 +51,6 @@ public abstract class StepView
     {
         Text progressStatusText = new Text(progressStatus);
 
-        progressStatusText.setTextAlignment(TextAlignment.LEFT);
-
         root.setTop(progressStatusText);
     }
 
@@ -76,8 +73,6 @@ public abstract class StepView
                 buttonBox.getChildren().add(createResetButton());
                 break;
         }
-
-        buttonBox.setAlignment(Pos.CENTER);
 
         root.setBottom(buttonBox);
     }

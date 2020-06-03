@@ -42,17 +42,7 @@ public class StepSceneManager
         Image image = ImageStateManager.loadDefault();
         currentStep = stepList.get(0);
 
-        LOGGER.info("Progress status: {}", getProgressStatusFormattedString());
-
-
-
-        currentStep.initializeView(getProgressStatusFormattedString(), image);
-
-        Parent root = currentStep.getViewRoot();
-        Scene scene = new Scene(root, 800, 600);
-
-        stage.setScene(scene);
-        stage.show();
+        loadScene(image);
     }
 
 
@@ -77,32 +67,28 @@ public class StepSceneManager
 
         currentStep = stepList.get(stepList.indexOf(currentStep) + 1);
 
-        LOGGER.info("Progress status: {}", getProgressStatusFormattedString());
-
-
-        currentStep.initializeView(getProgressStatusFormattedString(), image);
-
-        Parent root = currentStep.getViewRoot();
-        Scene scene = new Scene(root, 800, 600);
-
-        stage.setScene(scene);
-        stage.show();
+        loadScene(image);
     }
 
     public static void goToPreviousStep()
     {
         LOGGER.info("Loading previous step...");
+
+        ImageStateManager.clear(currentStep);
         currentStep = stepList.get(stepList.indexOf(currentStep) - 1);
 
 
-        LOGGER.info("Progress status: {}", getProgressStatusFormattedString());
-
-
         Image image = ImageStateManager.restore(currentStep);
+        loadScene(image);
+    }
+
+    private static void loadScene(Image image)
+    {
+        LOGGER.info("Progress status: {}", getProgressStatusFormattedString());
         currentStep.initializeView(getProgressStatusFormattedString(), image);
 
         Parent root = currentStep.getViewRoot();
-        Scene scene = new Scene(root, 800, 600);
+        Scene scene = new Scene(root);
 
         stage.setScene(scene);
         stage.show();
