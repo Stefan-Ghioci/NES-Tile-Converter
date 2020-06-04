@@ -36,6 +36,9 @@ public class ImageLoadController extends StepController
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("BMP", "*.bmp"));
         File file = fileChooser.showOpenDialog(view.getRoot().getScene().getWindow());
 
+        if (file == null)
+            return;
+
         LOGGER.info("Validating chosen file...");
 
         Image image = new Image(file.toURI().toString());

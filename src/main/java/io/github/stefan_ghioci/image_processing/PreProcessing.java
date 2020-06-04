@@ -1,9 +1,8 @@
 package io.github.stefan_ghioci.image_processing;
 
 import io.github.stefan_ghioci.model.Color;
-import io.github.stefan_ghioci.navigation.impl.preprocessing.PreProcessingController;
+import io.github.stefan_ghioci.tools.ColorTools;
 import io.github.stefan_ghioci.tools.FileTools;
-import io.github.stefan_ghioci.tools.Metrics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,7 +14,7 @@ import java.util.stream.Collectors;
 
 public class PreProcessing
 {
-    private static final Logger LOGGER = LoggerFactory.getLogger(PreProcessingController.class.getSimpleName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(PreProcessing.class.getSimpleName());
 
     public static List<Color> computeBestPalette(Color[][] colorMatrix)
     {
@@ -27,7 +26,7 @@ public class PreProcessing
         for (Color[] colors : colorMatrix)
             for (Color color : colors)
             {
-                Color bestMatch = Metrics.bestMatch(color, palette);
+                Color bestMatch = ColorTools.bestMatch(color, palette);
                 histogram.put(bestMatch, histogram.get(bestMatch) + 1);
             }
 
@@ -55,12 +54,12 @@ public class PreProcessing
                 switch (ditheringMethod)
                 {
                     case None:
-                        colorMatrix[x][y] = Metrics.bestMatch(colorMatrix[x][y], palette);
+                        colorMatrix[x][y] = ColorTools.bestMatch(colorMatrix[x][y], palette);
                         break;
                     case FloydSteinberg:
                     {
                         Color oldColor = colorMatrix[x][y];
-                        Color newColor = Metrics.bestMatch(oldColor, palette);
+                        Color newColor = ColorTools.bestMatch(oldColor, palette);
                         Color error = Color.difference(oldColor, newColor);
 
                         colorMatrix[x][y] = newColor;
@@ -80,12 +79,12 @@ public class PreProcessing
                     break;
                     case Random:
                     {
-
-                        double randomWeight = (1 - Math.random() * 2) * Math.random() * Math.random() * Math.random();
-                        Color unit = new Color(255, 255, 255);
+                        double scale = Math.random() * Math.random();
+                        double randomWeight = (1 - Math.random() * 2) * scale;
 
                         Color oldColor = colorMatrix[x][y];
-                        Color newColor = Metrics.bestMatch(addWeightedError(oldColor, unit, randomWeight), palette);
+                        Color newColor = ColorTools.bestMatch(addWeightedError(oldColor, oldColor, randomWeight),
+                                                              palette);
 
                         colorMatrix[x][y] = newColor;
                     }
