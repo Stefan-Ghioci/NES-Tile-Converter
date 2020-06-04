@@ -1,6 +1,5 @@
 package io.github.stefan_ghioci.navigation.impl.preprocessing;
 
-import io.github.stefan_ghioci.image_processing.Dithering;
 import io.github.stefan_ghioci.image_processing.PreProcessing;
 import io.github.stefan_ghioci.model.Color;
 import io.github.stefan_ghioci.navigation.base.StepController;
@@ -66,13 +65,13 @@ public class PreProcessingController extends StepController
     public void handleLoadBestPalette()
     {
         view.palette.setAll(FXTools.colorListToFXColorList(PreProcessing.computeBestPalette(FXTools.imageToColorMatrix(
-                view.getImage()))));
+                view.getInitialImage()))));
     }
 
     public List<String> getDitheringMethods()
     {
-        return Stream.of(Dithering.Method.values())
-                     .map(Dithering.Method::name)
+        return Stream.of(PreProcessing.DitheringMethod.values())
+                     .map(PreProcessing.DitheringMethod::name)
                      .collect(Collectors.toList());
     }
 
@@ -80,8 +79,8 @@ public class PreProcessingController extends StepController
     {
         Color[][] colorMatrix = FXTools.imageToColorMatrix(view.getInitialImage());
         List<Color> palette = FXTools.fxColorListToColorList(view.palette);
-        Dithering.Method ditheringMethod = Dithering.Method.valueOf(view.ditheringChoiceBox.getSelectionModel()
-                                                                                           .getSelectedItem());
+        PreProcessing.DitheringMethod ditheringMethod = PreProcessing.DitheringMethod.valueOf(view.ditheringChoiceBox.getSelectionModel()
+                                                                                                                     .getSelectedItem());
 
         view.setImage(FXTools.colorMatrixToImage(PreProcessing.quantize(colorMatrix, palette, ditheringMethod)));
     }
