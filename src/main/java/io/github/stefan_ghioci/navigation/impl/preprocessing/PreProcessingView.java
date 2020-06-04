@@ -1,5 +1,6 @@
 package io.github.stefan_ghioci.navigation.impl.preprocessing;
 
+import io.github.stefan_ghioci.image_processing.PreProcessing;
 import io.github.stefan_ghioci.navigation.base.StepView;
 import io.github.stefan_ghioci.tools.FXTools;
 import io.github.stefan_ghioci.tools.FileTools;
@@ -12,6 +13,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 public class PreProcessingView extends StepView
@@ -47,7 +51,9 @@ public class PreProcessingView extends StepView
         loadBestPaletteButton.setText("Load Best Palette");
 
         ditheringChoiceBox = new ChoiceBox<>();
-        ditheringChoiceBox.getItems().setAll(controller.getDitheringMethods());
+        ditheringChoiceBox.getItems().setAll(Stream.of(PreProcessing.DitheringMethod.values())
+                                                   .map(PreProcessing.DitheringMethod::name)
+                                                   .collect(Collectors.toList()));
         ditheringChoiceBox.getSelectionModel().select(0);
 
         quantizeButton = new Button();

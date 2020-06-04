@@ -1,6 +1,6 @@
 package io.github.stefan_ghioci.tools;
 
-import io.github.stefan_ghioci.model.Color;
+import io.github.stefan_ghioci.image_processing.Color;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -1,6 +1,5 @@
 package io.github.stefan_ghioci.image_processing;
 
-import io.github.stefan_ghioci.model.Color;
 import io.github.stefan_ghioci.tools.ColorTools;
 import io.github.stefan_ghioci.tools.FileTools;
 import org.slf4j.Logger;

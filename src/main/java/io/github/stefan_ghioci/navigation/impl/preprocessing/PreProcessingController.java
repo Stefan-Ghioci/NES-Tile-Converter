@@ -1,7 +1,7 @@
 package io.github.stefan_ghioci.navigation.impl.preprocessing;
 
+import io.github.stefan_ghioci.image_processing.Color;
 import io.github.stefan_ghioci.image_processing.PreProcessing;
-import io.github.stefan_ghioci.model.Color;
 import io.github.stefan_ghioci.navigation.base.StepController;
 import io.github.stefan_ghioci.navigation.base.StepView;
 import io.github.stefan_ghioci.tools.FXTools;
@@ -10,8 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class PreProcessingController extends StepController
 {
@@ -66,13 +64,6 @@ public class PreProcessingController extends StepController
     {
         view.palette.setAll(FXTools.colorListToFXColorList(PreProcessing.computeBestPalette(FXTools.imageToColorMatrix(
                 view.getInitialImage()))));
-    }
-
-    public List<String> getDitheringMethods()
-    {
-        return Stream.of(PreProcessing.DitheringMethod.values())
-                     .map(PreProcessing.DitheringMethod::name)
-                     .collect(Collectors.toList());
     }
 
     public void handleQuantization()

@@ -1,4 +1,4 @@
-package io.github.stefan_ghioci.model;
+package io.github.stefan_ghioci.image_processing;
 
 
 import java.util.Objects;
