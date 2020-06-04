@@ -1,6 +1,7 @@
 package io.github.stefan_ghioci.tools;
 
 import io.github.stefan_ghioci.image_processing.Color;
+import javafx.scene.image.Image;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -72,5 +73,11 @@ public class FileTools
         LOGGER.info("Loaded {}-color palette", palette.size());
 
         return palette;
+    }
+
+    public static Image loadDefaultImage()
+    {
+        LOGGER.info("Loading default...");
+        return new Image(FileTools.class.getResourceAsStream("image_placeholder.bmp"));
     }
 }

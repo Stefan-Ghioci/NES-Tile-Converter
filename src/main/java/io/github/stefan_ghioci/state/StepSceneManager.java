@@ -1,6 +1,7 @@
 package io.github.stefan_ghioci.state;
 
 import io.github.stefan_ghioci.navigation.base.Step;
+import io.github.stefan_ghioci.tools.FileTools;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -8,15 +9,19 @@ import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.StringJoiner;
 
 public class StepSceneManager
 {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(StepSceneManager.class.getSimpleName());
-    static List<Step> stepList;
-    static Step currentStep;
+    private static final Map<Parent, Scene> scenes = new HashMap<>();
+
+    private static List<Step> stepList;
+    private static Step currentStep;
     private static Stage stage;
 
     private StepSceneManager()
@@ -38,10 +43,11 @@ public class StepSceneManager
     {
         LOGGER.info("Starting first step");
 
-        Image image = ImageStateManager.loadDefault();
+        Image image = FileTools.loadDefaultImage();
         currentStep = stepList.get(0);
+        currentStep.initializeView(getProgressStatusFormattedString(), image);
 
-        loadScene(image);
+        loadStage();
     }
 
 
@@ -61,45 +67,38 @@ public class StepSceneManager
     {
         LOGGER.info("Loading next step...");
 
-        Image image = currentStep.getImage();
-        ImageStateManager.save(currentStep, image);
+        Image image = currentStep.getView().getImage();
 
         currentStep = stepList.get(stepList.indexOf(currentStep) + 1);
+        currentStep.initializeView(getProgressStatusFormattedString(), image);
 
-        loadScene(image);
+        loadStage();
     }
 
     public static void goToPreviousStep()
     {
         LOGGER.info("Loading previous step...");
 
-        ImageStateManager.clear(currentStep);
         currentStep = stepList.get(stepList.indexOf(currentStep) - 1);
-        Image image = ImageStateManager.load(currentStep);
 
-        loadScene(image);
+        loadStage();
     }
 
-    private static void loadScene(Image image)
+    private static void loadStage()
     {
         LOGGER.info("Progress status: {}", getProgressStatusFormattedString());
-        currentStep.initializeView(getProgressStatusFormattedString(), image);
 
-        Parent root = currentStep.getViewRoot();
-        Scene scene = new Scene(root);
+        Parent root = currentStep.getView().getRoot();
+        Scene scene = getScene(root);
 
         stage.setScene(scene);
         stage.show();
     }
 
-
-    public static void reset()
+    private static Scene getScene(Parent root)
     {
-        LOGGER.info("Resetting current step...");
-
-        Step previousStep = stepList.get(stepList.indexOf(currentStep) - 1);
-        Image image = ImageStateManager.load(previousStep);
-
-        loadScene(image);
+        if (scenes.get(root) == null)
+            scenes.put(root, new Scene(root));
+        return scenes.get(root);
     }
 }

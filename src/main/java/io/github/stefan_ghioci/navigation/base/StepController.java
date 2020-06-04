@@ -26,9 +26,11 @@ public abstract class StepController
             case NEXT:
                 StepSceneManager.goToNextStep();
                 break;
-            case RESET:
-                StepSceneManager.reset();
-                break;
         }
+    }
+
+    public void handleResetChanges()
+    {
+        stepView.setImage(stepView.getInitialImage());
     }
 }

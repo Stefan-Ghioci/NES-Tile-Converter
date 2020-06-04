@@ -1,6 +1,5 @@
 package io.github.stefan_ghioci.navigation.base;
 
-import javafx.scene.Parent;
 import javafx.scene.image.Image;
 
 public class Step
@@ -21,9 +20,9 @@ public class Step
         this.phase = phase;
     }
 
-    public Parent getViewRoot()
+    public StepView getView()
     {
-        return view.getRoot();
+        return view;
     }
 
     public void initializeView(String progressStatus, Image image)
@@ -32,8 +31,4 @@ public class Step
         view.initialize(progressStatus, phase, image);
     }
 
-    public Image getImage()
-    {
-        return view.getImage();
-    }
 }

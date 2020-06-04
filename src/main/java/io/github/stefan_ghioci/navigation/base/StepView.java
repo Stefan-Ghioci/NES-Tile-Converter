@@ -10,9 +10,12 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class StepView
 {
+    private static final Logger LOGGER = LoggerFactory.getLogger(StepView.class.getSimpleName());
 
     protected final StepController stepController;
     protected BorderPane root;
@@ -26,6 +29,7 @@ public abstract class StepView
 
     public void initialize(String progressStatus, Phase phase, Image image)
     {
+        LOGGER.info("Initializing view...");
         initialImage = image;
 
         root = new BorderPane();
@@ -94,7 +98,7 @@ public abstract class StepView
     {
         Button button = new Button();
 
-        button.setOnAction(event -> stepController.handleNavigation(ButtonType.RESET));
+        button.setOnAction(event -> stepController.handleResetChanges());
         button.setText("Reset");
 
         return button;
