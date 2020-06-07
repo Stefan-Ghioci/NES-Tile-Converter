@@ -3,18 +3,23 @@ package io.github.stefan_ghioci.navigation.impl.reconstruction;
 import io.github.stefan_ghioci.image_processing.Color;
 import io.github.stefan_ghioci.image_processing.Constants;
 import io.github.stefan_ghioci.image_processing.Reconstruction;
+import io.github.stefan_ghioci.image_processing.SubPaletteConfig;
 import io.github.stefan_ghioci.navigation.base.StepController;
 import io.github.stefan_ghioci.navigation.base.StepView;
 import io.github.stefan_ghioci.tools.FXTools;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
 import javafx.scene.shape.Rectangle;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 public class ReconstructionController extends StepController
 {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ReconstructionController.class.getSimpleName());
     private ReconstructionView view;
 
     @Override
@@ -31,15 +36,30 @@ public class ReconstructionController extends StepController
         boolean forcedBlack = view.blackBackgroundColorCheckBox.isSelected();
         Color[][] colorMatrix = FXTools.imageToColorMatrix(view.getInitialImage());
 
+
+        Thread thread = new Thread(() ->
+                                   {
+                                       LOGGER.info("Starting reconstruction thread...");
+                                       Reconstruction.reconstruct(colorMatrix, type, forcedBlack, speed, () ->
+                                       {
+                                           Platform.runLater(() -> update(Reconstruction.getLastBestResult()));
+                                           return null;
+                                       });
+                                       view.reconstructButton.setDisable(false);
+                                       view.stopReconstructionButton.setDisable(true);
+                                   });
+
         view.reconstructButton.setDisable(true);
+        view.stopReconstructionButton.setDisable(false);
+        view.stopReconstructionButton.setOnAction(event ->
+                                                  {
+                                                      thread.stop();
+                                                      view.reconstructButton.setDisable(false);
+                                                      view.stopReconstructionButton.setDisable(true);
+                                                      LOGGER.info("Reconstruction interrupted");
+                                                  });
 
-        Reconstruction.SubPaletteConfig solution = Reconstruction.reconstruct(colorMatrix, type, forcedBlack, speed);
-        List<List<Color>> palette = solution.getSubPaletteList();
-        view.setImage(FXTools.colorMatrixToImage(Reconstruction.redrawColorMatrix(colorMatrix,
-                                                                                  palette)));
-
-        setViewPalette(palette);
-        view.reconstructButton.setDisable(false);
+        thread.start();
     }
 
     private void setViewPalette(List<List<Color>> palette)
@@ -75,5 +95,16 @@ public class ReconstructionController extends StepController
                 rectangle.setFill(javafx.scene.paint.Color.BLACK);
             }
         }
+
+        Reconstruction.resetLastBestConfig();
+    }
+
+    public void update(SubPaletteConfig subPaletteConfig)
+    {
+        LOGGER.info("Redrawing image with new palette...");
+        Color[][] colorMatrix = FXTools.imageToColorMatrix(view.getInitialImage());
+        List<List<Color>> palette = subPaletteConfig.getSubPaletteList();
+        view.setImage(FXTools.colorMatrixToImage(Reconstruction.redrawColorMatrix(colorMatrix, palette)));
+        setViewPalette(palette);
     }
 }

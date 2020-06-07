@@ -28,41 +28,47 @@ public class PreProcessing
                         colorMatrix[x][y] = ColorTools.bestMatch(colorMatrix[x][y], palette);
                         break;
                     case FloydSteinberg:
-                    {
-                        Color oldColor = colorMatrix[x][y];
-                        Color newColor = ColorTools.bestMatch(oldColor, palette);
-                        Color error = Color.difference(oldColor, newColor);
-
-                        colorMatrix[x][y] = newColor;
-
-                        try
-                        {
-                            colorMatrix[x + 1][y] = addWeightedError(colorMatrix[x + 1][y], error, 7 / 16.0);
-                            colorMatrix[x - 1][y + 1] = addWeightedError(colorMatrix[x - 1][y + 1], error, 3 / 16.0);
-                            colorMatrix[x][y + 1] = addWeightedError(colorMatrix[x][y + 1], error, 4 / 16.0);
-                            colorMatrix[x + 1][y + 1] = addWeightedError(colorMatrix[x + 1][y + 1], error, 1 / 16.0);
-                        }
-                        catch (ArrayIndexOutOfBoundsException ignored)
-                        {
-                            // out of image boundary -> continue
-                        }
-                    }
-                    break;
+                        floydSteinbergDither(colorMatrix, palette, y, x);
+                        break;
                     case Random:
-                    {
-                        double scale = Math.random() * Math.random();
-                        double randomWeight = (1 - Math.random() * 2) * scale;
-
-                        Color oldColor = colorMatrix[x][y];
-                        Color newColor = ColorTools.bestMatch(addWeightedError(oldColor, oldColor, randomWeight),
-                                                              palette);
-
-                        colorMatrix[x][y] = newColor;
-                    }
-                    break;
+                        randomDither(colorMatrix[x], palette, y);
+                        break;
                 }
 
         return colorMatrix;
+    }
+
+    private static void randomDither(Color[] colorMatrix, List<Color> palette, int y)
+    {
+        double scale = Math.random() / 4;
+        double randomWeight = (1 - Math.random() * 2) * scale;
+
+        Color oldColor = colorMatrix[y];
+        Color newColor = ColorTools.bestMatch(addWeightedError(oldColor, oldColor, randomWeight),
+                                              palette);
+
+        colorMatrix[y] = newColor;
+    }
+
+    private static void floydSteinbergDither(Color[][] colorMatrix, List<Color> palette, int y, int x)
+    {
+        Color oldColor = colorMatrix[x][y];
+        Color newColor = ColorTools.bestMatch(oldColor, palette);
+        Color error = Color.difference(oldColor, newColor);
+
+        colorMatrix[x][y] = newColor;
+
+        try
+        {
+            colorMatrix[x + 1][y] = addWeightedError(colorMatrix[x + 1][y], error, 7 / 16.0);
+            colorMatrix[x - 1][y + 1] = addWeightedError(colorMatrix[x - 1][y + 1], error, 3 / 16.0);
+            colorMatrix[x][y + 1] = addWeightedError(colorMatrix[x][y + 1], error, 4 / 16.0);
+            colorMatrix[x + 1][y + 1] = addWeightedError(colorMatrix[x + 1][y + 1], error, 1 / 16.0);
+        }
+        catch (ArrayIndexOutOfBoundsException ignored)
+        {
+            // out of image boundary -> continue
+        }
     }
 
     private static Color addWeightedError(Color color, Color error, double weight)

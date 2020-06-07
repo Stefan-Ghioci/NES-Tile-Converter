@@ -7,7 +7,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 import java.util.stream.Collectors;
@@ -20,6 +19,7 @@ public class ReconstructionView extends StepView
     VBox paletteVBox;
     CheckBox blackBackgroundColorCheckBox;
     Button reconstructButton;
+    Button stopReconstructionButton;
     ToggleGroup speedToggleGroup;
     ChoiceBox<String> paletteTypeChoiceBox;
 
@@ -66,8 +66,15 @@ public class ReconstructionView extends StepView
         reconstructButton.setText("Reconstruct");
         reconstructButton.setOnAction(event -> controller.handleReconstruction());
 
+        stopReconstructionButton = new Button();
+        stopReconstructionButton.setText("Stop");
+        stopReconstructionButton.setDisable(true);
 
-        return new VBox(paletteTypeChoiceBox, speedButtonVBox, blackBackgroundColorCheckBox, reconstructButton);
+        return new VBox(paletteTypeChoiceBox,
+                        speedButtonVBox,
+                        blackBackgroundColorCheckBox,
+                        reconstructButton,
+                        stopReconstructionButton);
     }
 
     @Override
@@ -81,7 +88,6 @@ public class ReconstructionView extends StepView
             for (int j = 0; j < Constants.SUB_PALETTE_SIZE; j++)
             {
                 Rectangle rectangle = new Rectangle(20, 20);
-                rectangle.setFill(Color.BLACK);
 
                 subPaletteHBox.getChildren().add(rectangle);
             }

@@ -10,7 +10,7 @@ import java.util.stream.IntStream;
 
 public abstract class EvolutionaryAlgorithm
 {
-    private static final Logger LOGGER = LoggerFactory.getLogger(EvolutionaryAlgorithm.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(EvolutionaryAlgorithm.class.getSimpleName());
 
     private Individual lastBest;
 
@@ -22,8 +22,6 @@ public abstract class EvolutionaryAlgorithm
 
         List<Individual> population = generatePopulation(populationSize);
 
-
-        setLastBest(population.get(0));
         int iterationCounter = 1;
         int stagnationTime = 1;
 
@@ -31,8 +29,6 @@ public abstract class EvolutionaryAlgorithm
 
         while (stagnationTime < stagnationFactor)
         {
-
-            setLastBest(best(population));
             Individual mother = select(population);
             Individual father = select(population);
 
@@ -60,12 +56,12 @@ public abstract class EvolutionaryAlgorithm
 
                 if (improvement != 0)
                 {
-                    setLastBest(newBest);
-                    stagnationTime = 1;
                     LOGGER.info("Iteration {}, best fitness {} with {}% improvement",
                                 iterationCounter,
                                 (int) newBest.getFitness(),
                                 improvement);
+                    setLastBest(newBest);
+                    stagnationTime = 1;
                 }
                 else
                 {
@@ -74,8 +70,8 @@ public abstract class EvolutionaryAlgorithm
             }
             else
             {
-                setLastBest(newBest);
                 LOGGER.info("Iteration 1, initial best fitness {}", (int) newBest.getFitness());
+                setLastBest(newBest);
             }
             iterationCounter++;
         }
