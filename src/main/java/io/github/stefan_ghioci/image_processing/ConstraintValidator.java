@@ -10,6 +10,6 @@ public class ConstraintValidator
         int width = (int) image.getWidth();
         int height = (int) image.getHeight();
 
-        return width % Constraints.TILE_GROUP_SIZE == 0 && height % Constraints.TILE_GROUP_SIZE == 0;
+        return width % Constants.TILE_GROUP_SIZE == 0 && height % Constants.TILE_GROUP_SIZE == 0;
     }
 }

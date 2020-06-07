@@ -30,6 +30,7 @@ public class PreProcessingView extends StepView
     Text paletteSizeText;
     Button loadNESPaletteButton;
     Button loadBestPaletteButton;
+    Button loadNESGrayscalePaletteButton;
     ChoiceBox<String> ditheringChoiceBox;
     Button quantizeButton;
 
@@ -50,9 +51,14 @@ public class PreProcessingView extends StepView
         loadBestPaletteButton.setOnAction(event -> controller.handleLoadBestPalette());
         loadBestPaletteButton.setText("Load Best Palette");
 
+
+        loadNESGrayscalePaletteButton = new Button();
+        loadNESGrayscalePaletteButton.setOnAction(event -> controller.handleLoadNESGrayscalePalette());
+        loadNESGrayscalePaletteButton.setText("Load Grayscale Palette");
+
         ditheringChoiceBox = new ChoiceBox<>();
-        ditheringChoiceBox.getItems().setAll(Stream.of(PreProcessing.DitheringMethod.values())
-                                                   .map(PreProcessing.DitheringMethod::name)
+        ditheringChoiceBox.getItems().setAll(Stream.of(PreProcessing.Dithering.values())
+                                                   .map(PreProcessing.Dithering::name)
                                                    .collect(Collectors.toList()));
         ditheringChoiceBox.getSelectionModel().select(0);
 
@@ -61,7 +67,11 @@ public class PreProcessingView extends StepView
         quantizeButton.setText("Quantize Image");
         quantizeButton.setDisable(true);
 
-        return new VBox(loadNESPaletteButton, loadBestPaletteButton, ditheringChoiceBox, quantizeButton);
+        return new VBox(loadNESPaletteButton,
+                        loadBestPaletteButton,
+                        loadNESGrayscalePaletteButton,
+                        ditheringChoiceBox,
+                        quantizeButton);
     }
 
     @Override

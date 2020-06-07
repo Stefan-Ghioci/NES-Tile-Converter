@@ -1,6 +1,6 @@
 package io.github.stefan_ghioci.navigation.impl.reconstruction;
 
-import io.github.stefan_ghioci.image_processing.Constraints;
+import io.github.stefan_ghioci.image_processing.Constants;
 import io.github.stefan_ghioci.image_processing.Reconstruction;
 import io.github.stefan_ghioci.navigation.base.StepView;
 import javafx.scene.control.*;
@@ -49,12 +49,13 @@ public class ReconstructionView extends StepView
         fastButton.setText("Fast (causes artifacts)");
         fastButton.setToggleGroup(speedToggleGroup);
 
+        speedToggleGroup.selectToggle(standardButton);
+
         VBox speedButtonVBox = new VBox(slowButton, standardButton, fastButton);
 
         paletteTypeChoiceBox = new ChoiceBox<>();
-
-        paletteTypeChoiceBox.getItems().setAll(Stream.of(Reconstruction.PaletteType.values())
-                                                     .map(Reconstruction.PaletteType::name)
+        paletteTypeChoiceBox.getItems().setAll(Stream.of(Reconstruction.Palette.values())
+                                                     .map(Reconstruction.Palette::name)
                                                      .collect(Collectors.toList()));
         paletteTypeChoiceBox.getSelectionModel().select(0);
 
@@ -74,10 +75,10 @@ public class ReconstructionView extends StepView
     {
         paletteVBox = new VBox();
 
-        for (int i = 0; i < Constraints.SUB_PALETTE_COUNT; i++)
+        for (int i = 0; i < Constants.SUB_PALETTE_COUNT; i++)
         {
             HBox subPaletteHBox = new HBox();
-            for (int j = 0; j < Constraints.SUB_PALETTE_SIZE; j++)
+            for (int j = 0; j < Constants.SUB_PALETTE_SIZE; j++)
             {
                 Rectangle rectangle = new Rectangle(20, 20);
                 rectangle.setFill(Color.BLACK);
