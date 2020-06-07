@@ -21,7 +21,7 @@ public class Reconstruction
         return lastBestResult;
     }
 
-    public static SubPaletteConfig reconstruct(Color[][] colorMatrix, Palette type, boolean forcedBlack, Speed speed, Callable<Void> update)
+    public static void reconstruct(Color[][] colorMatrix, Palette type, boolean forcedBlack, Speed speed, Callable<Void> update)
     {
         int width = colorMatrix.length;
         int height = colorMatrix[0].length;
@@ -59,19 +59,20 @@ public class Reconstruction
 
         switch (speed)
         {
+            //TODO: break down run configuration for each setting
             case Slow:
-                populationSize = tileGroupCount / 3;
-                stagnationFactor = tileGroupCount * 10;
+                populationSize = 50;
+                stagnationFactor = 1000;
                 mutationChance = 0.5;
                 break;
             case Standard:
-                populationSize = tileGroupCount / 6;
-                stagnationFactor = tileGroupCount * 4;
+                populationSize = 60;
+                stagnationFactor = 500;
                 mutationChance = 0.25;
                 break;
             case Fast:
-                populationSize = tileGroupCount / 10;
-                stagnationFactor = tileGroupCount / 2;
+                populationSize = 100;
+                stagnationFactor = 100;
                 mutationChance = 0.1;
                 break;
             default:
@@ -100,7 +101,6 @@ public class Reconstruction
         };
         subPaletteAlgorithm.run(populationSize, stagnationFactor, mutationChance);
 
-        return lastBestResult;
     }
 
     public static Color[][] redrawColorMatrix(Color[][] colorMatrix, List<List<Color>> subPaletteList)

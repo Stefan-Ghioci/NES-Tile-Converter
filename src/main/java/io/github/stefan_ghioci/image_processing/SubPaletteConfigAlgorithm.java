@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static io.github.stefan_ghioci.tools.Miscellaneous.getRandomElement;
 
@@ -50,16 +49,6 @@ public class SubPaletteConfigAlgorithm extends EvolutionaryAlgorithm
         }
 
         return new SubPaletteConfig(subPaletteList, colorMatrix);
-    }
-
-    @Override
-    protected Individual select(List<Individual> population)
-    {
-        int populationThreshold = (int) (population.size() * 0.75);
-        return getRandomElement(population.stream()
-                                          .sorted(Comparator.comparingDouble(Individual::getFitness).reversed())
-                                          .limit(populationThreshold)
-                                          .collect(Collectors.toList()));
     }
 
     @Override

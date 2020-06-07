@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static io.github.stefan_ghioci.tools.Miscellaneous.getRandomElement;
+
 public abstract class EvolutionaryAlgorithm
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(EvolutionaryAlgorithm.class.getSimpleName());
@@ -52,7 +54,7 @@ public abstract class EvolutionaryAlgorithm
 
             if (iterationCounter != 1)
             {
-                double improvement = calculateImprovement(getLastBest(), newBest);
+                double improvement = calculateImprovement(newBest);
 
                 if (improvement != 0)
                 {
@@ -78,13 +80,12 @@ public abstract class EvolutionaryAlgorithm
 
         LOGGER.info("Algorithm ran for {} iterations, last best fitness {}",
                     iterationCounter,
-                    (int) getLastBest().getFitness());
+                    (int) lastBest.getFitness());
     }
 
-    private double calculateImprovement(Individual lastBest, Individual newBest)
+    private float calculateImprovement(Individual newBest)
     {
-        return (int) (Math.round((lastBest.getFitness() - newBest.getFitness()) / lastBest.getFitness() * 10000))
-                / 100.0;
+        return (float) ((lastBest.getFitness() - newBest.getFitness()) / lastBest.getFitness() * 100);
     }
 
 
@@ -112,7 +113,15 @@ public abstract class EvolutionaryAlgorithm
 
     protected abstract Individual generateIndividual();
 
-    protected abstract Individual select(List<Individual> population);
+    protected Individual select(List<Individual> population)
+    {
+//        int populationThreshold = (int) (population.size() * 0.75);
+//        return getRandomElement(population.stream()
+//                                          .sorted(Comparator.comparingDouble(Individual::getFitness).reversed())
+//                                          .limit(populationThreshold)
+//                                          .collect(Collectors.toList()));
+        return getRandomElement(population);
+    }
 
     protected abstract Individual crossover(Individual mother, Individual father);
 

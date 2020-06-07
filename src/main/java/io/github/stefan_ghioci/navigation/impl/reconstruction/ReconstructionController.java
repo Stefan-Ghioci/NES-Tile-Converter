@@ -36,6 +36,7 @@ public class ReconstructionController extends StepController
         boolean forcedBlack = view.blackBackgroundColorCheckBox.isSelected();
         Color[][] colorMatrix = FXTools.imageToColorMatrix(view.getInitialImage());
 
+        setButtonBehaviour(true);
 
         Thread thread = new Thread(() ->
                                    {
@@ -45,21 +46,25 @@ public class ReconstructionController extends StepController
                                            Platform.runLater(() -> update(Reconstruction.getLastBestResult()));
                                            return null;
                                        });
-                                       view.reconstructButton.setDisable(false);
-                                       view.stopReconstructionButton.setDisable(true);
+                                       LOGGER.info("Reconstruction finished");
+                                       setButtonBehaviour(false);
                                    });
 
-        view.reconstructButton.setDisable(true);
-        view.stopReconstructionButton.setDisable(false);
         view.stopReconstructionButton.setOnAction(event ->
                                                   {
+                                                      LOGGER.info("Interrupting reconstruction thread...");
                                                       thread.stop();
-                                                      view.reconstructButton.setDisable(false);
-                                                      view.stopReconstructionButton.setDisable(true);
-                                                      LOGGER.info("Reconstruction interrupted");
+                                                      setButtonBehaviour(false);
                                                   });
 
         thread.start();
+    }
+
+    private void setButtonBehaviour(boolean working)
+    {
+        view.stopReconstructionButton.setDisable(!working);
+        view.reconstructButton.setDisable(working);
+        setNavigationBarDisabled(working);
     }
 
     private void setViewPalette(List<List<Color>> palette)

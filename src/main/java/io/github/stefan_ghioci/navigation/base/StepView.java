@@ -21,6 +21,7 @@ public abstract class StepView
     protected BorderPane root;
     private ImageView imageView;
     private Image initialImage;
+    HBox navigationButtonBox;
 
     public StepView(StepController stepController)
     {
@@ -62,25 +63,25 @@ public abstract class StepView
 
     private Pane initializeBottomPane(Phase type)
     {
-        HBox buttonBox = new HBox();
+        navigationButtonBox = new HBox();
 
         switch (type)
         {
             case INITIAL:
-                buttonBox.getChildren().add(createNextButton());
+                navigationButtonBox.getChildren().add(createNextButton());
                 break;
             case STANDARD:
-                buttonBox.getChildren().add(createBackButton());
-                buttonBox.getChildren().add(createNextButton());
-                buttonBox.getChildren().add(createResetButton());
+                navigationButtonBox.getChildren().add(createBackButton());
+                navigationButtonBox.getChildren().add(createNextButton());
+                navigationButtonBox.getChildren().add(createResetButton());
                 break;
             case FINAL:
-                buttonBox.getChildren().add(createBackButton());
-                buttonBox.getChildren().add(createResetButton());
+                navigationButtonBox.getChildren().add(createBackButton());
+                navigationButtonBox.getChildren().add(createResetButton());
                 break;
         }
 
-        return buttonBox;
+        return navigationButtonBox;
     }
 
 

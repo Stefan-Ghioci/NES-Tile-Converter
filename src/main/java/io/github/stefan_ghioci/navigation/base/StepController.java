@@ -1,6 +1,7 @@
 package io.github.stefan_ghioci.navigation.base;
 
 import io.github.stefan_ghioci.state.StepSceneManager;
+import javafx.scene.control.Button;
 
 public abstract class StepController
 {
@@ -32,5 +33,12 @@ public abstract class StepController
     public void handleResetChanges()
     {
         stepView.setImage(stepView.getInitialImage());
+    }
+
+    protected void setNavigationBarDisabled(boolean disabled)
+    {
+        stepView.navigationButtonBox.getChildren()
+                                    .filtered(node -> node.getClass().equals(Button.class))
+                                    .forEach((button -> button.setDisable(disabled)));
     }
 }
