@@ -48,18 +48,18 @@ public class Reconstruction
         switch (speed)
         {
             case Slow:
-                populationSize = tileGroupCount;
-                stagnationFactor = tileGroupCount * 6;
+                populationSize = tileGroupCount / 2;
+                stagnationFactor = tileGroupCount * 10;
                 mutationChance = 0.5;
                 break;
             case Standard:
                 populationSize = tileGroupCount / 3;
-                stagnationFactor = tileGroupCount * 3;
+                stagnationFactor = tileGroupCount * 4;
                 mutationChance = 0.25;
                 break;
             case Fast:
                 populationSize = tileGroupCount / 6;
-                stagnationFactor = tileGroupCount;
+                stagnationFactor = tileGroupCount * 2;
                 mutationChance = 0.1;
                 break;
             default:
@@ -222,8 +222,31 @@ public class Reconstruction
         @Override
         public void evaluate()
         {
-            Color[][] redrawnMatrix = redrawColorMatrix(colorMatrix, subPaletteList);
-            totalDistance = ColorTools.totalDistanceBetween(redrawnMatrix, colorMatrix);
+            int width = colorMatrix.length;
+            int height = colorMatrix[0].length;
+
+            totalDistance = 0;
+
+            for (int y = 0; y < height; y += TILE_GROUP_SIZE)
+                for (int x = 0; x < width; x += TILE_GROUP_SIZE)
+                {
+                    double bestTileGroupDistance = -1;
+                    for (List<Color> subPalette : subPaletteList)
+                    {
+                        double tileGroupDistance = 0;
+                        for (int j = 0; j < TILE_GROUP_SIZE; j++)
+                            for (int i = 0; i < TILE_GROUP_SIZE; i++)
+                            {
+                                Color color1 = colorMatrix[x + i][y + j];
+                                Color color2 = ColorTools.bestMatch(color1, subPalette);
+
+                                tileGroupDistance += Metrics.distanceBetween(color1, color2);
+                            }
+                        if (bestTileGroupDistance == -1 || tileGroupDistance < bestTileGroupDistance)
+                            bestTileGroupDistance = tileGroupDistance;
+                    }
+                    totalDistance += bestTileGroupDistance;
+                }
         }
 
         @Override
