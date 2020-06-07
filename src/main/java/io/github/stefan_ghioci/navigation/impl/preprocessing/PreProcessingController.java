@@ -65,7 +65,6 @@ public class PreProcessingController extends StepController
     public void handleLoadBestPalette()
     {
         Color[][] colorMatrix = FXTools.imageToColorMatrix(view.getInitialImage());
-        //todo: add forcedblack button
         List<Color> bestPalette = ColorTools.computeBestPalette(colorMatrix, false, Constants.MAX_PALETTE_SIZE);
 
         view.palette.setAll(FXTools.colorListToFXColorList(bestPalette));

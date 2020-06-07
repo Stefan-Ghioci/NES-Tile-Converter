@@ -8,5 +8,4 @@ public interface Individual
 
     void mutate();
 
-    Object getSolution();
 }

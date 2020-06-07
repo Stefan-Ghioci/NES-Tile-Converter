@@ -1,6 +1,8 @@
-package io.github.stefan_ghioci.image_processing;
+package io.github.stefan_ghioci.ai.impl;
 
 import io.github.stefan_ghioci.ai.Individual;
+import io.github.stefan_ghioci.image_processing.Color;
+import io.github.stefan_ghioci.image_processing.Constants;
 import io.github.stefan_ghioci.tools.ColorTools;
 import io.github.stefan_ghioci.tools.Metrics;
 
@@ -70,12 +72,6 @@ public class SubPaletteConfig implements Individual
 
         subPaletteList.remove(getRandomElement(subPaletteList));
         subPaletteList.add(mixedSubPalette);
-    }
-
-    @Override
-    public Object getSolution()
-    {
-        return subPaletteList;
     }
 
     public List<List<Color>> getSubPaletteList()

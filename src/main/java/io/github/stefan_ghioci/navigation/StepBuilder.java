@@ -19,7 +19,7 @@ import java.util.List;
 
 public class StepBuilder
 {
-    List<Step> stepList;
+    final List<Step> stepList;
 
     public StepBuilder()
     {

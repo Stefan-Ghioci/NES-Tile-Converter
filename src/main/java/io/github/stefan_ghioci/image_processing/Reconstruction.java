@@ -1,6 +1,8 @@
 package io.github.stefan_ghioci.image_processing;
 
 import io.github.stefan_ghioci.ai.Individual;
+import io.github.stefan_ghioci.ai.impl.SubPaletteConfig;
+import io.github.stefan_ghioci.ai.impl.SubPaletteConfigAlgorithm;
 import io.github.stefan_ghioci.tools.ColorTools;
 import io.github.stefan_ghioci.tools.Metrics;
 import org.slf4j.Logger;

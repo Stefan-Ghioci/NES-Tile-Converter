@@ -6,7 +6,7 @@ public class Step
 {
     private final String description;
     private final Phase phase;
-    private StepView view;
+    private final StepView view;
 
     public String getDescription()
     {

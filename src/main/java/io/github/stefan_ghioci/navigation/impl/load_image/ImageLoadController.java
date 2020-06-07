@@ -1,6 +1,6 @@
 package io.github.stefan_ghioci.navigation.impl.load_image;
 
-import io.github.stefan_ghioci.image_processing.ConstraintValidator;
+import io.github.stefan_ghioci.image_processing.Constants;
 import io.github.stefan_ghioci.navigation.base.StepController;
 import io.github.stefan_ghioci.navigation.base.StepView;
 import io.github.stefan_ghioci.tools.FXTools;
@@ -42,9 +42,11 @@ public class ImageLoadController extends StepController
         LOGGER.info("Validating chosen file...");
 
         Image image = new Image(file.toURI().toString());
-        boolean isValid = ConstraintValidator.validateImageSize(image);
 
-        if (isValid)
+        int width = (int) image.getWidth();
+        int height = (int) image.getHeight();
+
+        if (width % Constants.TILE_GROUP_SIZE == 0 && height % Constants.TILE_GROUP_SIZE == 0)
         {
             LOGGER.info("Image is valid, replacing previous image...");
             view.setImage(image);

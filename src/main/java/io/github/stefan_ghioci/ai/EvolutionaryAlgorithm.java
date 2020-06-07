@@ -125,11 +125,6 @@ public abstract class EvolutionaryAlgorithm
 
     protected abstract Individual crossover(Individual mother, Individual father);
 
-    public Individual getLastBest()
-    {
-        return lastBest;
-    }
-
     public void setLastBest(Individual lastBest)
     {
         this.lastBest = lastBest;

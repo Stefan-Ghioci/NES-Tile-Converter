@@ -30,15 +30,6 @@ public class ColorTools
         return minDistanceColor;
     }
 
-    public static Color getAverage(List<Color> palette)
-    {
-        int red = palette.stream().mapToInt(Color::getRed).sum() / palette.size();
-        int green = palette.stream().mapToInt(Color::getGreen).sum() / palette.size();
-        int blue = palette.stream().mapToInt(Color::getBlue).sum() / palette.size();
-
-        return new Color(red, green, blue);
-    }
-
     public static List<Color> computeBestPalette(Color[][] colorMatrix, boolean forcedBlack, int size)
     {
         List<Color> palette = FileTools.loadNESPalette();
@@ -85,25 +76,4 @@ public class ColorTools
         return palette;
     }
 
-    public static double totalDistanceBetween(Color[][] colorMatrix1, Color[][] colorMatrix2)
-    {
-        double totalDistance = 0;
-
-        int width = colorMatrix1.length;
-        int height = colorMatrix1[0].length;
-
-        if (width != colorMatrix2.length || height != colorMatrix2[0].length)
-            throw new UnsupportedOperationException("Matrices sizes are not the same. ");
-
-        for (int y = 0; y < height; y++)
-            for (int x = 0; x < width; x++)
-            {
-                Color color1 = colorMatrix1[x][y];
-                Color color2 = colorMatrix2[x][y];
-
-                totalDistance += Metrics.distanceBetween(color1, color2);
-            }
-
-        return totalDistance;
-    }
 }

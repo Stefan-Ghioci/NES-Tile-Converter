@@ -7,13 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public abstract class HierarchicalAgglomerativeClustering<E>
+public abstract class AgglomerativeClustering<E>
 {
-    protected static final Logger LOGGER = LoggerFactory.getLogger(HierarchicalAgglomerativeClustering.class);
+    protected static final Logger LOGGER = LoggerFactory.getLogger(AgglomerativeClustering.class);
 
     public List<List<E>> run(List<E> entities, int desiredClusterCount)
     {
-        LOGGER.info("Running complete-linkage HAC algorithm on {} entities into {} clusters ",
+        LOGGER.info("Running complete-linkage agglomerative clustering algorithm on {} entities into {} clusters ",
                     entities.size(),
                     desiredClusterCount);
 

@@ -1,9 +1,9 @@
 package io.github.stefan_ghioci.navigation.impl.reconstruction;
 
+import io.github.stefan_ghioci.ai.impl.SubPaletteConfig;
 import io.github.stefan_ghioci.image_processing.Color;
 import io.github.stefan_ghioci.image_processing.Constants;
 import io.github.stefan_ghioci.image_processing.Reconstruction;
-import io.github.stefan_ghioci.image_processing.SubPaletteConfig;
 import io.github.stefan_ghioci.navigation.base.StepController;
 import io.github.stefan_ghioci.navigation.base.StepView;
 import io.github.stefan_ghioci.tools.FXTools;
