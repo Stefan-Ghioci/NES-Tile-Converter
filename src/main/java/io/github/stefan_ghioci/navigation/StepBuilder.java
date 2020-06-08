@@ -2,6 +2,7 @@ package io.github.stefan_ghioci.navigation;
 
 import io.github.stefan_ghioci.navigation.base.Phase;
 import io.github.stefan_ghioci.navigation.base.Step;
+import io.github.stefan_ghioci.navigation.base.StepController;
 import io.github.stefan_ghioci.navigation.base.StepView;
 import io.github.stefan_ghioci.navigation.impl.compression.CompressionController;
 import io.github.stefan_ghioci.navigation.impl.compression.CompressionView;
@@ -34,7 +35,7 @@ public class StepBuilder
 
     public StepBuilder addImageLoadStep()
     {
-        ImageLoadController controller = new ImageLoadController();
+        StepController controller = new ImageLoadController();
         StepView view = new ImageLoadView(controller);
         controller.setView(view);
 
@@ -46,7 +47,7 @@ public class StepBuilder
 
     public StepBuilder addPreProcessingStep()
     {
-        PreProcessingController controller = new PreProcessingController();
+        StepController controller = new PreProcessingController();
         StepView view = new PreProcessingView(controller);
         controller.setView(view);
 
@@ -59,7 +60,7 @@ public class StepBuilder
 
     public StepBuilder addReconstructionStep()
     {
-        ReconstructionController controller = new ReconstructionController();
+        StepController controller = new ReconstructionController();
         StepView view = new ReconstructionView(controller);
         controller.setView(view);
 
@@ -72,8 +73,7 @@ public class StepBuilder
 
     public StepBuilder addCompressionStep()
     {
-        //TODO: create Ctrl&View
-        CompressionController controller = new CompressionController();
+        StepController controller = new CompressionController();
         StepView view = new CompressionView(controller);
         controller.setView(view);
 
@@ -86,8 +86,7 @@ public class StepBuilder
 
     public StepBuilder addFinalResultStep()
     {
-        //TODO: create Ctrl&View
-        FinalResultController controller = new FinalResultController();
+        StepController controller = new FinalResultController();
         StepView view = new FinalResultStepView(controller);
         controller.setView(view);
 

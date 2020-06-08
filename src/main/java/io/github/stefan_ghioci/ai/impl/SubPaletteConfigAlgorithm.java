@@ -2,8 +2,8 @@ package io.github.stefan_ghioci.ai.impl;
 
 import io.github.stefan_ghioci.ai.EvolutionaryAlgorithm;
 import io.github.stefan_ghioci.ai.Individual;
-import io.github.stefan_ghioci.image_processing.Color;
-import io.github.stefan_ghioci.image_processing.Constants;
+import io.github.stefan_ghioci.processing.Color;
+import io.github.stefan_ghioci.processing.Constants;
 import io.github.stefan_ghioci.tools.Metrics;
 
 import java.util.ArrayList;

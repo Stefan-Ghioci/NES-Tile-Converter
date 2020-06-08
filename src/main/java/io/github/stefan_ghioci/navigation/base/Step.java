@@ -27,7 +27,6 @@ public class Step
 
     public void initializeView(String progressStatus, Image image)
     {
-
         view.initialize(progressStatus, phase, image);
     }
 

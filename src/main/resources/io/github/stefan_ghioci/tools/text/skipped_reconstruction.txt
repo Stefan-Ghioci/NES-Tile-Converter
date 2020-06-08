@@ -1,0 +1,2 @@
+You must first reconstruct your image, in order to fit tile color distribution constraints.
+Go back and click the "Reconstruct" button with your preferred settings.

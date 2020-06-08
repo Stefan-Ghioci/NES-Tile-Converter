@@ -1,6 +1,6 @@
 package io.github.stefan_ghioci.tools;
 
-import io.github.stefan_ghioci.image_processing.Color;
+import io.github.stefan_ghioci.processing.Color;
 
 public class Metrics
 {

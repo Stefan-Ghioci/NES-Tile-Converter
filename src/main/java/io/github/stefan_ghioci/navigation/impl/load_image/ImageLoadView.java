@@ -1,5 +1,6 @@
 package io.github.stefan_ghioci.navigation.impl.load_image;
 
+import io.github.stefan_ghioci.navigation.base.StepController;
 import io.github.stefan_ghioci.navigation.base.StepView;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
@@ -10,7 +11,7 @@ public class ImageLoadView extends StepView
     private final ImageLoadController controller;
     Button loadImageButton;
 
-    public ImageLoadView(ImageLoadController controller)
+    public ImageLoadView(StepController controller)
     {
         super(controller);
         this.controller = ((ImageLoadController) stepController);

@@ -1,4 +1,4 @@
-package io.github.stefan_ghioci.image_processing;
+package io.github.stefan_ghioci.processing;
 
 import io.github.stefan_ghioci.tools.ColorTools;
 import org.slf4j.Logger;

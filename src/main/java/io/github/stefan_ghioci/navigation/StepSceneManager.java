@@ -1,4 +1,4 @@
-package io.github.stefan_ghioci.state;
+package io.github.stefan_ghioci.navigation;
 
 import io.github.stefan_ghioci.navigation.base.Step;
 import io.github.stefan_ghioci.tools.FileTools;

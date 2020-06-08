@@ -1,8 +1,8 @@
 package io.github.stefan_ghioci.ai.impl;
 
 import io.github.stefan_ghioci.ai.Individual;
-import io.github.stefan_ghioci.image_processing.Color;
-import io.github.stefan_ghioci.image_processing.Constants;
+import io.github.stefan_ghioci.processing.Color;
+import io.github.stefan_ghioci.processing.Constants;
 import io.github.stefan_ghioci.tools.ColorTools;
 import io.github.stefan_ghioci.tools.Metrics;
 
@@ -10,7 +10,9 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import static io.github.stefan_ghioci.image_processing.Constants.TILE_GROUP_SIZE;
+import static io.github.stefan_ghioci.processing.Constants.TILE_GROUP_SIZE;
+import static io.github.stefan_ghioci.tools.ColorTools.bestMatch;
+import static io.github.stefan_ghioci.tools.Metrics.distanceBetween;
 import static io.github.stefan_ghioci.tools.Miscellaneous.getRandomElement;
 
 public class SubPaletteConfig implements Individual
@@ -39,25 +41,17 @@ public class SubPaletteConfig implements Individual
 
         totalDistance = 0;
 
-        for (int y = 0; y < height; y += TILE_GROUP_SIZE)
-            for (int x = 0; x < width; x += TILE_GROUP_SIZE)
-            {
-                double bestTileGroupDistance = -1;
-                for (List<Color> subPalette : subPaletteList)
-                {
-                    double tileGroupDistance = 0;
-                    for (int j = 0; j < TILE_GROUP_SIZE; j++)
-                        for (int i = 0; i < TILE_GROUP_SIZE; i++)
-                        {
-                            Color color1 = colorMatrix[x + i][y + j];
-                            Color color2 = ColorTools.bestMatch(color1, subPalette);
+        List<Color>[][] mapping = ColorTools.computeBestSubPaletteMapping(colorMatrix, subPaletteList);
 
-                            tileGroupDistance += Metrics.distanceBetween(color1, color2);
-                        }
-                    if (bestTileGroupDistance == -1 || tileGroupDistance < bestTileGroupDistance)
-                        bestTileGroupDistance = tileGroupDistance;
-                }
-                totalDistance += bestTileGroupDistance;
+        for (int y = 0; y < height; y++)
+            for (int x = 0; x < width; x++)
+            {
+                List<Color> bestSubPalette = mapping[x / TILE_GROUP_SIZE][y / TILE_GROUP_SIZE];
+
+                Color color1 = this.colorMatrix[x][y];
+                Color color2 = bestMatch(color1, bestSubPalette);
+
+                totalDistance += distanceBetween(color1, color2);
             }
     }
 

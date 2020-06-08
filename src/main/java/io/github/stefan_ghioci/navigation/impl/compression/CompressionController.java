@@ -1,7 +1,102 @@
 package io.github.stefan_ghioci.navigation.impl.compression;
 
+import io.github.stefan_ghioci.ai.impl.SubPaletteConfig;
 import io.github.stefan_ghioci.navigation.base.StepController;
+import io.github.stefan_ghioci.navigation.base.StepView;
+import io.github.stefan_ghioci.processing.Color;
+import io.github.stefan_ghioci.processing.Compression;
+import io.github.stefan_ghioci.processing.Reconstruction;
+import io.github.stefan_ghioci.tools.ColorTools;
+import io.github.stefan_ghioci.tools.FXTools;
+import io.github.stefan_ghioci.tools.FileTools;
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 public class CompressionController extends StepController
 {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CompressionController.class.getSimpleName());
+    private CompressionView view;
+
+    @Override
+    public void setView(StepView view)
+    {
+        super.setView(view);
+        this.view = (CompressionView) this.stepView;
+    }
+
+    public void handleCompression()
+    {
+        int desiredTileCount = (int) view.tileSlider.getValue();
+        Compression.Type type = (Compression.Type) view.compressionTypeToggleGroup.getSelectedToggle()
+                                                                                  .getUserData();
+
+        Color[][] colorMatrix = FXTools.imageToColorMatrix(view.getInitialImage());
+
+        SubPaletteConfig lastReconstructionResult = Reconstruction.getLastResult();
+
+        if (lastReconstructionResult == null)
+        {
+            FXTools.showAlert("Compression Error", FileTools.loadText("skipped_reconstruction"), Alert.AlertType.ERROR);
+            return;
+        }
+        List<List<Color>> subPaletteList = lastReconstructionResult.getSubPaletteList();
+
+        setButtonBehaviour(true);
+
+        Thread thread = new Thread(() ->
+                                   {
+                                       LOGGER.info("Starting compression thread...");
+                                       Compression.compress(colorMatrix,
+                                                            subPaletteList,
+                                                            desiredTileCount,
+                                                            type,
+                                                            () ->
+                                                            {
+                                                                Platform.runLater(() -> update(desiredTileCount));
+                                                                return null;
+                                                            });
+                                       LOGGER.info("Compression finished");
+                                       setCompressedImage();
+                                       setButtonBehaviour(false);
+                                   });
+
+        thread.start();
+    }
+
+    private void setCompressedImage()
+    {
+        view.setImage(FXTools.colorMatrixToImage(ColorTools.tilesToColorMatrix(Compression.getLastResult(),
+                                                                               (int) view.getImage().getWidth(),
+                                                                               (int) view.getImage().getHeight())));
+    }
+
+    private void update(int desiredTileCount)
+    {
+        int width = (int) view.getImage().getWidth();
+        int height = (int) view.getImage().getHeight();
+
+        int initialTileCount = ColorTools.getTileCount(width, height);
+        int currentTileCount = Compression.getCurrentTileCount();
+
+        double progress = 1.0 * (initialTileCount - currentTileCount) / (initialTileCount - desiredTileCount);
+        view.compressionProgressBar.setProgress(progress);
+    }
+
+    private void setButtonBehaviour(boolean working)
+    {
+        view.compressionProgressBar.setOpacity(working ? 1 : 0);
+        view.compressButton.setDisable(working);
+        setNavigationBarDisabled(working);
+    }
+
+    @Override
+    public void handleResetChanges()
+    {
+        super.handleResetChanges();
+        Compression.resetLastResult();
+    }
 }

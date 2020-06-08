@@ -1,9 +1,12 @@
 package io.github.stefan_ghioci.navigation.impl.reconstruction;
 
-import io.github.stefan_ghioci.image_processing.Constants;
-import io.github.stefan_ghioci.image_processing.Reconstruction;
+import io.github.stefan_ghioci.navigation.base.Phase;
+import io.github.stefan_ghioci.navigation.base.StepController;
 import io.github.stefan_ghioci.navigation.base.StepView;
+import io.github.stefan_ghioci.processing.Constants;
+import io.github.stefan_ghioci.processing.Reconstruction;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -23,10 +26,17 @@ public class ReconstructionView extends StepView
     ToggleGroup speedToggleGroup;
     ChoiceBox<String> paletteTypeChoiceBox;
 
-    public ReconstructionView(ReconstructionController controller)
+    public ReconstructionView(StepController controller)
     {
         super(controller);
         this.controller = (ReconstructionController) this.stepController;
+    }
+
+    @Override
+    public void initialize(String progressStatus, Phase phase, Image image)
+    {
+        super.initialize(progressStatus, phase, image);
+        Reconstruction.resetLastResult();
     }
 
     @Override

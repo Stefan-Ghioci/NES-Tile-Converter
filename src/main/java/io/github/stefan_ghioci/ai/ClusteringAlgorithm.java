@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public abstract class AgglomerativeClustering<E>
+public abstract class ClusteringAlgorithm<E>
 {
-    protected static final Logger LOGGER = LoggerFactory.getLogger(AgglomerativeClustering.class);
+    protected static final Logger LOGGER = LoggerFactory.getLogger(ClusteringAlgorithm.class);
 
     public List<List<E>> run(List<E> entities, int desiredClusterCount)
     {
@@ -19,12 +19,9 @@ public abstract class AgglomerativeClustering<E>
 
         List<List<E>> clusters = initializeClusters(entities);
 
-        int checkpoint = (clusters.size() - desiredClusterCount) / 6;
-        int i = 0;
         while (clusters.size() > desiredClusterCount)
         {
-            if (i % checkpoint == 0)
-                LOGGER.info("{}% complete", (int) ((double) (i) / (i + clusters.size() - desiredClusterCount) * 100));
+            LOGGER.info("Current cluster count = {}", clusters.size());
 
             List<E> minLinkageCluster1 = clusters.get(0);
             List<E> minLinkageCluster2 = clusters.get(1);
@@ -48,15 +45,13 @@ public abstract class AgglomerativeClustering<E>
                 }
 
             merge(clusters, minLinkageCluster1, minLinkageCluster2);
-
-            i++;
         }
 
         LOGGER.info("Clustering complete!");
         return clusters;
     }
 
-    private void merge(List<List<E>> clusters, List<E> minLinkageCluster1, List<E> minLinkageCluster2)
+    protected void merge(List<List<E>> clusters, List<E> minLinkageCluster1, List<E> minLinkageCluster2)
     {
         List<E> newCluster = new ArrayList<>();
         newCluster.addAll(minLinkageCluster1);

@@ -1,8 +1,8 @@
 package io.github.stefan_ghioci;
 
 import io.github.stefan_ghioci.navigation.StepBuilder;
+import io.github.stefan_ghioci.navigation.StepSceneManager;
 import io.github.stefan_ghioci.navigation.base.Step;
-import io.github.stefan_ghioci.state.StepSceneManager;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;

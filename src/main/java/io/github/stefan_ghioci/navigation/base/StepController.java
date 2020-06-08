@@ -1,6 +1,6 @@
 package io.github.stefan_ghioci.navigation.base;
 
-import io.github.stefan_ghioci.state.StepSceneManager;
+import io.github.stefan_ghioci.navigation.StepSceneManager;
 import javafx.scene.control.Button;
 
 public abstract class StepController

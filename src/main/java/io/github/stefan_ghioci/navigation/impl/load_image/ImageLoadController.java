@@ -1,8 +1,8 @@
 package io.github.stefan_ghioci.navigation.impl.load_image;
 
-import io.github.stefan_ghioci.image_processing.Constants;
 import io.github.stefan_ghioci.navigation.base.StepController;
 import io.github.stefan_ghioci.navigation.base.StepView;
+import io.github.stefan_ghioci.processing.Constants;
 import io.github.stefan_ghioci.tools.FXTools;
 import io.github.stefan_ghioci.tools.FileTools;
 import javafx.scene.control.Alert;

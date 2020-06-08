@@ -1,11 +1,12 @@
 package io.github.stefan_ghioci.navigation.impl.final_result;
 
+import io.github.stefan_ghioci.navigation.base.StepController;
 import io.github.stefan_ghioci.navigation.base.StepView;
 import javafx.scene.layout.Pane;
 
 public class FinalResultStepView extends StepView
 {
-    public FinalResultStepView(FinalResultController controller)
+    public FinalResultStepView(StepController controller)
     {
         super(controller);
     }

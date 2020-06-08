@@ -1,11 +1,11 @@
 package io.github.stefan_ghioci.navigation.impl.reconstruction;
 
 import io.github.stefan_ghioci.ai.impl.SubPaletteConfig;
-import io.github.stefan_ghioci.image_processing.Color;
-import io.github.stefan_ghioci.image_processing.Constants;
-import io.github.stefan_ghioci.image_processing.Reconstruction;
 import io.github.stefan_ghioci.navigation.base.StepController;
 import io.github.stefan_ghioci.navigation.base.StepView;
+import io.github.stefan_ghioci.processing.Color;
+import io.github.stefan_ghioci.processing.Constants;
+import io.github.stefan_ghioci.processing.Reconstruction;
 import io.github.stefan_ghioci.tools.FXTools;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
@@ -43,7 +43,7 @@ public class ReconstructionController extends StepController
                                        LOGGER.info("Starting reconstruction thread...");
                                        Reconstruction.reconstruct(colorMatrix, type, forcedBlack, speed, () ->
                                        {
-                                           Platform.runLater(() -> update(Reconstruction.getLastBestResult()));
+                                           Platform.runLater(() -> update(Reconstruction.getLastResult()));
                                            return null;
                                        });
                                        LOGGER.info("Reconstruction finished");
@@ -101,7 +101,7 @@ public class ReconstructionController extends StepController
             }
         }
 
-        Reconstruction.resetLastBestConfig();
+        Reconstruction.resetLastResult();
     }
 
     public void update(SubPaletteConfig subPaletteConfig)

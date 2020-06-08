@@ -1,7 +1,8 @@
 package io.github.stefan_ghioci.navigation.impl.preprocessing;
 
-import io.github.stefan_ghioci.image_processing.PreProcessing;
+import io.github.stefan_ghioci.navigation.base.StepController;
 import io.github.stefan_ghioci.navigation.base.StepView;
+import io.github.stefan_ghioci.processing.PreProcessing;
 import io.github.stefan_ghioci.tools.FXTools;
 import io.github.stefan_ghioci.tools.FileTools;
 import javafx.collections.FXCollections;
@@ -34,7 +35,7 @@ public class PreProcessingView extends StepView
     ChoiceBox<String> ditheringChoiceBox;
     Button quantizeButton;
 
-    public PreProcessingView(PreProcessingController controller)
+    public PreProcessingView(StepController controller)
     {
         super(controller);
         this.controller = (PreProcessingController) this.stepController;

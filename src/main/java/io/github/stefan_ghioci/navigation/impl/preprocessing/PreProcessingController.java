@@ -1,10 +1,10 @@
 package io.github.stefan_ghioci.navigation.impl.preprocessing;
 
-import io.github.stefan_ghioci.image_processing.Color;
-import io.github.stefan_ghioci.image_processing.Constants;
-import io.github.stefan_ghioci.image_processing.PreProcessing;
 import io.github.stefan_ghioci.navigation.base.StepController;
 import io.github.stefan_ghioci.navigation.base.StepView;
+import io.github.stefan_ghioci.processing.Color;
+import io.github.stefan_ghioci.processing.Constants;
+import io.github.stefan_ghioci.processing.PreProcessing;
 import io.github.stefan_ghioci.tools.ColorTools;
 import io.github.stefan_ghioci.tools.FXTools;
 import io.github.stefan_ghioci.tools.FileTools;

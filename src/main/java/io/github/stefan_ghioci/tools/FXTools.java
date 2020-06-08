@@ -1,6 +1,6 @@
 package io.github.stefan_ghioci.tools;
 
-import io.github.stefan_ghioci.image_processing.Color;
+import io.github.stefan_ghioci.processing.Color;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
