@@ -80,13 +80,11 @@ public class FileTools
         return new Image(FileTools.class.getResourceAsStream("image_placeholder.bmp"));
     }
 
-    public static void saveImageToFile(Image image, File file)
+    public static void saveImageToFile(BufferedImage image, File file)
     {
-        BufferedImage bufferedImage = FXTools.fxImageToBufferedImage(image);
-
         try
         {
-            ImageIO.write(bufferedImage, "bmp", file);
+            ImageIO.write(image, "bmp", file);
         }
         catch (IOException e)
         {

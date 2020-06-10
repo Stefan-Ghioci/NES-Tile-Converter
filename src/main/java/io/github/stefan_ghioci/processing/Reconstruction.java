@@ -17,14 +17,18 @@ import static io.github.stefan_ghioci.processing.Constants.*;
 public class Reconstruction
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(Reconstruction.class.getSimpleName());
-    private static SubPaletteConfig lastResult = null;
+    private static List<List<Color>> lastResult = null;
 
-    public static SubPaletteConfig getLastResult()
+    public static List<List<Color>> getLastResult()
     {
         return lastResult;
     }
 
-    public static void reconstruct(Color[][] colorMatrix, Palette type, boolean forcedBlack, Speed speed, Callable<Void> update)
+    public static void reconstruct(Color[][] colorMatrix,
+                                   Palette type,
+                                   boolean forcedBlack,
+                                   Speed speed,
+                                   Callable<Void> update)
     {
         LOGGER.info("Initializing reconstruction algorithm, using {} palette (forcedBlack={}), {} speed setting",
                     type,
@@ -81,7 +85,7 @@ public class Reconstruction
             {
                 super.setLastBest(lastBest);
                 Reconstruction.LOGGER.info("New best sub palette config. Calling update function...");
-                lastResult = (SubPaletteConfig) lastBest;
+                lastResult = ((SubPaletteConfig) lastBest).getSubPaletteList();
                 try
                 {
                     update.call();

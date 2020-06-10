@@ -128,7 +128,7 @@ public class FXTools
         return writableImage;
     }
 
-    public static BufferedImage fxImageToBufferedImage(Image image)
+    public static BufferedImage imageToBufferedImage(Image image)
     {
         PixelReader pixelReader = image.getPixelReader();
         int width = (int) image.getWidth();

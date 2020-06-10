@@ -37,6 +37,11 @@ public class Color
                          oldColor.blue - newColor.blue);
     }
 
+    public static Color white()
+    {
+        return new Color(255, 255, 255);
+    }
+
     @Override
     public boolean equals(Object o)
     {

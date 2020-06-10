@@ -1,6 +1,5 @@
 package io.github.stefan_ghioci.navigation.impl.compression;
 
-import io.github.stefan_ghioci.ai.impl.SubPaletteConfig;
 import io.github.stefan_ghioci.navigation.base.StepController;
 import io.github.stefan_ghioci.navigation.base.StepView;
 import io.github.stefan_ghioci.processing.Color;
@@ -36,14 +35,13 @@ public class CompressionController extends StepController
 
         Color[][] colorMatrix = FXTools.imageToColorMatrix(view.getInitialImage());
 
-        SubPaletteConfig lastReconstructionResult = Reconstruction.getLastResult();
+        List<List<Color>> subPaletteList = Reconstruction.getLastResult();
 
-        if (lastReconstructionResult == null)
+        if (subPaletteList == null)
         {
             FXTools.showAlert("Compression Error", FileTools.loadText("skipped_reconstruction"), Alert.AlertType.ERROR);
             return;
         }
-        List<List<Color>> subPaletteList = lastReconstructionResult.getSubPaletteList();
 
         setButtonBehaviour(true);
 

@@ -28,10 +28,14 @@ public class ConversionView extends StepView
     protected Pane initializeRightPane()
     {
 
-        Button saveImageButton = new Button();
-        saveImageButton.setText("Save Image");
-        saveImageButton.setOnAction(event -> controller.handleSaveImage());
+        Button saveFullImageButton = new Button();
+        saveFullImageButton.setText("Save full image");
+        saveFullImageButton.setOnAction(event -> controller.handleSaveFullImage());
 
-        return new VBox(saveImageButton);
+        Button saveTileSetButton = new Button();
+        saveTileSetButton.setText("Save tile set");
+        saveTileSetButton.setOnAction(event -> controller.handleSaveTileSet());
+
+        return new VBox(saveFullImageButton, saveTileSetButton);
     }
 }

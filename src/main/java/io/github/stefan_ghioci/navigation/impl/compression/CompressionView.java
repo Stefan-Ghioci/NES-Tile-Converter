@@ -36,7 +36,7 @@ public class CompressionView extends StepView
         int height = (int) getImage().getHeight();
 
         int tileCount = ColorTools.getTileCount(width, height);
-        int tileSetSize = Constants.TILE_SET_SIZE;
+        int tileSetSize = Constants.MAX_TILE_COUNT;
         int unitSize = gcd(tileCount, tileSetSize);
 
         tileSlider = new Slider();

@@ -1,6 +1,5 @@
 package io.github.stefan_ghioci.navigation.impl.reconstruction;
 
-import io.github.stefan_ghioci.ai.impl.SubPaletteConfig;
 import io.github.stefan_ghioci.navigation.base.StepController;
 import io.github.stefan_ghioci.navigation.base.StepView;
 import io.github.stefan_ghioci.processing.Color;
@@ -104,12 +103,11 @@ public class ReconstructionController extends StepController
         Reconstruction.resetLastResult();
     }
 
-    public void update(SubPaletteConfig subPaletteConfig)
+    public void update(List<List<Color>> subPaletteList)
     {
         LOGGER.info("Redrawing image with new palette...");
         Color[][] colorMatrix = FXTools.imageToColorMatrix(view.getInitialImage());
-        List<List<Color>> palette = subPaletteConfig.getSubPaletteList();
-        view.setImage(FXTools.colorMatrixToImage(Reconstruction.redrawColorMatrix(colorMatrix, palette)));
-        setViewPalette(palette);
+        view.setImage(FXTools.colorMatrixToImage(Reconstruction.redrawColorMatrix(colorMatrix, subPaletteList)));
+        setViewPalette(subPaletteList);
     }
 }
