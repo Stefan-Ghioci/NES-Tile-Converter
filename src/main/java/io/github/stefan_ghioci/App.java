@@ -23,7 +23,7 @@ public class App extends Application
                 .addPreProcessingStep()
                 .addReconstructionStep()
                 .addCompressionStep()
-                .addFinalResultStep()
+                .addConversionStep()
                 .build();
 
         StepSceneManager.setStage(stage);

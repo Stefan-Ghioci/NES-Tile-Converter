@@ -1,4 +1,4 @@
-package io.github.stefan_ghioci.navigation.impl.load_image;
+package io.github.stefan_ghioci.navigation.impl.image_load;
 
 import io.github.stefan_ghioci.navigation.base.StepController;
 import io.github.stefan_ghioci.navigation.base.StepView;

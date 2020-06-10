@@ -5,10 +5,9 @@ import javafx.scene.image.Image;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -79,5 +78,19 @@ public class FileTools
     {
         LOGGER.info("Loading default...");
         return new Image(FileTools.class.getResourceAsStream("image_placeholder.bmp"));
+    }
+
+    public static void saveImageToFile(Image image, File file)
+    {
+        BufferedImage bufferedImage = FXTools.fxImageToBufferedImage(image);
+
+        try
+        {
+            ImageIO.write(bufferedImage, "bmp", file);
+        }
+        catch (IOException e)
+        {
+            LOGGER.error("Failed to save image to file. Cause: {}", e.getMessage());
+        }
     }
 }

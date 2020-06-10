@@ -13,8 +13,11 @@ import javafx.scene.text.Font;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 
 public class FXTools
 {
@@ -125,4 +128,18 @@ public class FXTools
         return writableImage;
     }
 
+    public static BufferedImage fxImageToBufferedImage(Image image)
+    {
+        PixelReader pixelReader = image.getPixelReader();
+        int width = (int) image.getWidth();
+        int height = (int) image.getHeight();
+
+        BufferedImage bufferedImage = new BufferedImage(width, height, TYPE_INT_RGB);
+
+        for (int y = 0; y < height; y++)
+            for (int x = 0; x < width; x++)
+                bufferedImage.setRGB(x, y, pixelReader.getArgb(x, y));
+
+        return bufferedImage;
+    }
 }

@@ -6,10 +6,10 @@ import io.github.stefan_ghioci.navigation.base.StepController;
 import io.github.stefan_ghioci.navigation.base.StepView;
 import io.github.stefan_ghioci.navigation.impl.compression.CompressionController;
 import io.github.stefan_ghioci.navigation.impl.compression.CompressionView;
-import io.github.stefan_ghioci.navigation.impl.final_result.FinalResultController;
-import io.github.stefan_ghioci.navigation.impl.final_result.FinalResultStepView;
-import io.github.stefan_ghioci.navigation.impl.load_image.ImageLoadController;
-import io.github.stefan_ghioci.navigation.impl.load_image.ImageLoadView;
+import io.github.stefan_ghioci.navigation.impl.conversion.ConversionController;
+import io.github.stefan_ghioci.navigation.impl.conversion.ConversionView;
+import io.github.stefan_ghioci.navigation.impl.image_load.ImageLoadController;
+import io.github.stefan_ghioci.navigation.impl.image_load.ImageLoadView;
 import io.github.stefan_ghioci.navigation.impl.preprocessing.PreProcessingController;
 import io.github.stefan_ghioci.navigation.impl.preprocessing.PreProcessingView;
 import io.github.stefan_ghioci.navigation.impl.reconstruction.ReconstructionController;
@@ -84,13 +84,13 @@ public class StepBuilder
 
     }
 
-    public StepBuilder addFinalResultStep()
+    public StepBuilder addConversionStep()
     {
-        StepController controller = new FinalResultController();
-        StepView view = new FinalResultStepView(controller);
+        StepController controller = new ConversionController();
+        StepView view = new ConversionView(controller);
         controller.setView(view);
 
-        String description = "Final Result";
+        String description = "Conversion";
         Phase phase = Phase.FINAL;
 
         return addStep(new Step(description, phase, view));
