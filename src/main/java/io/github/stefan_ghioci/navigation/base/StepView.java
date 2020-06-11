@@ -2,6 +2,7 @@ package io.github.stefan_ghioci.navigation.base;
 
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -19,9 +20,9 @@ public abstract class StepView
 
     protected final StepController stepController;
     protected BorderPane root;
+    HBox navigationButtonBox;
     private ImageView imageView;
     private Image initialImage;
-    HBox navigationButtonBox;
 
     public StepView(StepController stepController)
     {
@@ -52,7 +53,7 @@ public abstract class StepView
         imageView.setImage(image);
         imageView.setSmooth(false);
 
-        return new StackPane(imageView);
+        return new StackPane(new ScrollPane(imageView));
     }
 
     private Pane initializeTopPane(String progressStatus)
@@ -77,7 +78,6 @@ public abstract class StepView
                 break;
             case FINAL:
                 navigationButtonBox.getChildren().add(createBackButton());
-                navigationButtonBox.getChildren().add(createResetButton());
                 break;
         }
 

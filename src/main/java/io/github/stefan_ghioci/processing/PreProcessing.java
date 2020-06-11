@@ -6,9 +6,22 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
+import static io.github.stefan_ghioci.processing.Constants.TILE_SIZE;
+
 public class PreProcessing
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(PreProcessing.class.getSimpleName());
+    private static double[][] thresholdMap =
+            {
+                    { 36, 55, 2, 21, 32, 51, 6, 17 },
+                    { 56, 11, 30, 41, 60, 15, 26, 45 },
+                    { 20, 39, 50, 5, 16, 35, 54, 1 },
+                    { 40, 59, 14, 25, 44, 63, 10, 29 },
+                    { 4, 23, 34, 53, 0, 19, 38, 49 },
+                    { 24, 43, 62, 9, 28, 47, 58, 13 },
+                    { 52, 7, 18, 37, 48, 3, 22, 33 },
+                    { 8, 27, 46, 57, 12, 31, 42, 61 }
+            };
 
     public static Color[][] quantize(Color[][] colorMatrix, List<Color> palette, Dithering dithering)
     {
@@ -28,29 +41,35 @@ public class PreProcessing
                         colorMatrix[x][y] = ColorTools.bestMatch(colorMatrix[x][y], palette);
                         break;
                     case FloydSteinberg:
-                        floydSteinbergDither(colorMatrix, palette, y, x);
+                        floydSteinbergDither(colorMatrix, palette, x, y);
                         break;
                     case Random:
-                        randomDither(colorMatrix[x], palette, y);
+                        randomDither(colorMatrix, palette, x, y);
+                        break;
+                    case Ordered:
+                        int size = thresholdMap.length;
+                        double factor = thresholdMap[x % size][y % size] / (size * size) - 0.5;
+                        Color threshold = Color.gray(TILE_SIZE * TILE_SIZE);
+                        Color attempt = addWeightedError(colorMatrix[x][y], threshold, factor);
+                        colorMatrix[x][y] = ColorTools.bestMatch(attempt, palette);
                         break;
                 }
 
         return colorMatrix;
     }
 
-    private static void randomDither(Color[] colorMatrix, List<Color> palette, int y)
+    private static void randomDither(Color[][] colorMatrix, List<Color> palette, int x, int y)
     {
-        double scale = Math.random() / 4;
+        double scale = Math.pow(Math.random(), 3);
         double randomWeight = (1 - Math.random() * 2) * scale;
 
-        Color oldColor = colorMatrix[y];
-        Color newColor = ColorTools.bestMatch(addWeightedError(oldColor, oldColor, randomWeight),
-                                              palette);
+        Color oldColor = colorMatrix[x][y];
+        Color newColor = ColorTools.bestMatch(addWeightedError(oldColor, oldColor, randomWeight), palette);
 
-        colorMatrix[y] = newColor;
+        colorMatrix[x][y] = newColor;
     }
 
-    private static void floydSteinbergDither(Color[][] colorMatrix, List<Color> palette, int y, int x)
+    private static void floydSteinbergDither(Color[][] colorMatrix, List<Color> palette, int x, int y)
     {
         Color oldColor = colorMatrix[x][y];
         Color newColor = ColorTools.bestMatch(oldColor, palette);
@@ -82,6 +101,7 @@ public class PreProcessing
     {
         None,
         FloydSteinberg,
-        Random
+        Random,
+        Ordered
     }
 }

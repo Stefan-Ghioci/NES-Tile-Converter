@@ -42,6 +42,11 @@ public class Color
         return new Color(255, 255, 255);
     }
 
+    public static Color gray(int value)
+    {
+        return new Color(value, value, value);
+    }
+
     @Override
     public boolean equals(Object o)
     {
@@ -82,5 +87,6 @@ public class Color
     {
         return green;
     }
+
 
 }
