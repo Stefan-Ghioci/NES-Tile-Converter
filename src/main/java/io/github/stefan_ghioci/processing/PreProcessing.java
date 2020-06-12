@@ -49,7 +49,7 @@ public class PreProcessing
                     case Ordered:
                         int size = thresholdMap.length;
                         double factor = thresholdMap[x % size][y % size] / (size * size) - 0.5;
-                        Color threshold = Color.gray(TILE_SIZE * TILE_SIZE);
+                        Color threshold = Color.grayOf(TILE_SIZE * TILE_SIZE);
                         Color attempt = addWeightedError(colorMatrix[x][y], threshold, factor);
                         colorMatrix[x][y] = ColorTools.bestMatch(attempt, palette);
                         break;

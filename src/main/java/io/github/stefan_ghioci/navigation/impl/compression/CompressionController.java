@@ -62,6 +62,12 @@ public class CompressionController extends StepController
                                        setButtonBehaviour(false);
                                    });
 
+        view.interruptCompressionButton.setOnAction(event ->
+                                                    {
+                                                        LOGGER.info("Interrupting compression thread...");
+                                                        thread.stop();
+                                                        setButtonBehaviour(false);
+                                                    });
         thread.start();
     }
 
@@ -86,8 +92,11 @@ public class CompressionController extends StepController
 
     private void setButtonBehaviour(boolean working)
     {
-        view.compressionProgressBar.setOpacity(working ? 1 : 0);
+        view.compressionProgressBar.setDisable(!working);
+
         view.compressButton.setDisable(working);
+
+        view.interruptCompressionButton.setDisable(!working);
         setNavigationBarDisabled(working);
     }
 

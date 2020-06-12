@@ -1,16 +1,13 @@
 package io.github.stefan_ghioci.navigation.base;
 
+import io.github.stefan_ghioci.tools.Styling;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,6 +38,7 @@ public abstract class StepView
         root.setLeft(initializeLeftPane());
         root.setRight(initializeRightPane());
 
+        Styling.setBorderPaneSize(root);
     }
 
     protected abstract Pane initializeLeftPane();
@@ -53,18 +51,17 @@ public abstract class StepView
         imageView.setImage(image);
         imageView.setSmooth(false);
 
-        return new StackPane(new ScrollPane(imageView));
+        return Styling.createImagePane(imageView);
     }
 
     private Pane initializeTopPane(String progressStatus)
     {
-        Text progressStatusText = new Text(progressStatus);
-        return new TextFlow(progressStatusText);
+        return Styling.createProgressLabel(progressStatus);
     }
 
     private Pane initializeBottomPane(Phase type)
     {
-        navigationButtonBox = new HBox();
+        navigationButtonBox = Styling.createNavigationButtonBox();
 
         switch (type)
         {
@@ -87,7 +84,7 @@ public abstract class StepView
 
     private Button createBackButton()
     {
-        Button button = new Button();
+        Button button = Styling.createDefaultButton();
 
         button.setOnAction(event -> stepController.handleNavigation(ButtonType.BACK));
         button.setText("Back");
@@ -97,7 +94,7 @@ public abstract class StepView
 
     private Button createResetButton()
     {
-        Button button = new Button();
+        Button button = Styling.createWarningButton();
 
         button.setOnAction(event -> stepController.handleResetChanges());
         button.setText("Reset");
@@ -107,7 +104,7 @@ public abstract class StepView
 
     private Button createNextButton()
     {
-        Button button = new Button();
+        Button button = Styling.createPrimaryButton();
 
         button.setOnAction(event -> stepController.handleNavigation(ButtonType.NEXT));
         button.setText("Next");

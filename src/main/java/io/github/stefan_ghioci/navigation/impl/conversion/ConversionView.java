@@ -2,6 +2,7 @@ package io.github.stefan_ghioci.navigation.impl.conversion;
 
 import io.github.stefan_ghioci.navigation.base.StepController;
 import io.github.stefan_ghioci.navigation.base.StepView;
+import io.github.stefan_ghioci.tools.Styling;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -28,14 +29,16 @@ public class ConversionView extends StepView
     protected Pane initializeRightPane()
     {
 
-        Button saveFullImageButton = new Button();
+        Button saveFullImageButton = Styling.createPrimaryButton();
         saveFullImageButton.setText("Save full image");
         saveFullImageButton.setOnAction(event -> controller.handleSaveFullImage());
 
-        Button saveTileSetButton = new Button();
+        Button saveTileSetButton = Styling.createPrimaryButton();
         saveTileSetButton.setText("Save tile set");
         saveTileSetButton.setOnAction(event -> controller.handleSaveTileSet());
 
-        return new VBox(saveFullImageButton, saveTileSetButton);
+        VBox vBox = Styling.createLeftControlsVBox();
+        vBox.getChildren().addAll(saveFullImageButton, saveTileSetButton);
+        return vBox;
     }
 }

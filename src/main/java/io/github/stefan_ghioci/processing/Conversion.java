@@ -15,7 +15,8 @@ public class Conversion
         int width = TILE_SET_SIZE;
         int height = (int) Math.ceil(1.0 * distinctTiles.size() / (width / TILE_SIZE)) * SUB_PALETTE_COUNT * TILE_SIZE;
 
-        Color[][] tileSet = initializeColorMatrix(width, height, Color.white());
+        Color neutralColor = subPaletteList.get(0).get(0);
+        Color[][] tileSet = initializeColorMatrix(width, height, neutralColor);
 
         int x = 0;
         int y = 0;

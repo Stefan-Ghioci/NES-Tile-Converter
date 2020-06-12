@@ -2,6 +2,7 @@ package io.github.stefan_ghioci.navigation;
 
 import io.github.stefan_ghioci.navigation.base.Step;
 import io.github.stefan_ghioci.tools.FileTools;
+import io.github.stefan_ghioci.tools.Styling;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -53,7 +54,7 @@ public class StepSceneManager
 
     private static String getProgressStatusFormattedString()
     {
-        StringJoiner joiner = new StringJoiner(" -> ");
+        StringJoiner joiner = new StringJoiner(" → ");
         int inclusiveBound = stepList.indexOf(currentStep);
         for (int i = 0; i <= inclusiveBound; i++)
         {
@@ -98,7 +99,8 @@ public class StepSceneManager
     private static Scene getScene(Parent root)
     {
         if (scenes.get(root) == null)
-            scenes.put(root, new Scene(root));
+            scenes.put(root, Styling.createScene(root));
         return scenes.get(root);
     }
+
 }

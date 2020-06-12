@@ -5,6 +5,7 @@ import io.github.stefan_ghioci.navigation.base.StepView;
 import io.github.stefan_ghioci.processing.Compression;
 import io.github.stefan_ghioci.processing.Constants;
 import io.github.stefan_ghioci.tools.ColorTools;
+import io.github.stefan_ghioci.tools.Styling;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -17,6 +18,7 @@ public class CompressionView extends StepView
 
     Slider tileSlider;
     Button compressButton;
+    Button interruptCompressionButton;
     ProgressBar compressionProgressBar;
     ToggleGroup compressionTypeToggleGroup;
 
@@ -29,6 +31,7 @@ public class CompressionView extends StepView
     @Override
     protected Pane initializeLeftPane()
     {
+        //todo change label type
         Label tileSliderLabel = new Label();
         tileSliderLabel.setText("Desired number of tiles");
 
@@ -50,7 +53,10 @@ public class CompressionView extends StepView
         tileSlider.setMinorTickCount(unitSize);
         tileSlider.setValue(tileSetSize);
 
-        return new VBox(tileSliderLabel, tileSlider);
+        VBox vBox = new VBox();
+        vBox.getChildren().setAll(tileSliderLabel, tileSlider);
+
+        return vBox;
     }
 
     @Override
@@ -81,10 +87,18 @@ public class CompressionView extends StepView
         compressButton.setText("Compress");
         compressButton.setOnAction(event -> controller.handleCompression());
 
-        compressionProgressBar = new ProgressBar();
+        compressionProgressBar = Styling.createProgressBar();
         compressionProgressBar.setProgress(0);
-        compressionProgressBar.setOpacity(0);
+        compressionProgressBar.setDisable(true);
 
-        return new VBox(compressionTypeLabel, compressionTypeVBox, compressButton, compressionProgressBar);
+        interruptCompressionButton = Styling.createErrorButton();
+        interruptCompressionButton.setText("Interrupt");
+        interruptCompressionButton.setDisable(true);
+
+        return new VBox(compressionTypeLabel,
+                        compressionTypeVBox,
+                        compressButton,
+                        compressionProgressBar,
+                        interruptCompressionButton);
     }
 }

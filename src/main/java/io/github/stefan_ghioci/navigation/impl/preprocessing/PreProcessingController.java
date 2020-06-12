@@ -28,12 +28,16 @@ public class PreProcessingController extends StepController
 
     public void handleAddPickedColor()
     {
-        view.palette.add(0, view.colorPicker.getValue());
+        javafx.scene.paint.Color pickedColor = view.colorPicker.getValue();
+        LOGGER.info("Adding color {} to current palette...", FXTools.getColorCode(pickedColor));
+        view.palette.add(0, pickedColor);
     }
 
     public void handleDeleteSelectedColor()
     {
-        view.palette.remove(view.paletteListView.getSelectionModel().getSelectedItem());
+        javafx.scene.paint.Color selectedColor = view.paletteListView.getSelectionModel().getSelectedItem();
+        LOGGER.info("Removing color {} from current palette...", FXTools.getColorCode(selectedColor));
+        view.palette.remove(selectedColor);
     }
 
     public void handleAddButtonStatus()
@@ -51,7 +55,7 @@ public class PreProcessingController extends StepController
     {
         int paletteSize = view.palette.size();
 
-        view.paletteSizeText.setText("Palette size: " + paletteSize);
+        view.paletteSizeLabel.setText("Palette size: " + paletteSize);
         view.quantizeButton.setDisable(paletteSize <= 1);
 
         handleAddButtonStatus();

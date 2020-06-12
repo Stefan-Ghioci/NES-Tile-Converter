@@ -5,6 +5,7 @@ import io.github.stefan_ghioci.navigation.base.StepController;
 import io.github.stefan_ghioci.navigation.base.StepView;
 import io.github.stefan_ghioci.processing.Constants;
 import io.github.stefan_ghioci.processing.Reconstruction;
+import io.github.stefan_ghioci.tools.Styling;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
@@ -72,11 +73,11 @@ public class ReconstructionView extends StepView
         blackBackgroundColorCheckBox = new CheckBox();
         blackBackgroundColorCheckBox.setText("Force black as background color");
 
-        reconstructButton = new Button();
+        reconstructButton = Styling.createPrimaryButton();
         reconstructButton.setText("Reconstruct");
         reconstructButton.setOnAction(event -> controller.handleReconstruction());
 
-        stopReconstructionButton = new Button();
+        stopReconstructionButton = Styling.createSuccessButton();
         stopReconstructionButton.setText("Stop");
         stopReconstructionButton.setDisable(true);
 

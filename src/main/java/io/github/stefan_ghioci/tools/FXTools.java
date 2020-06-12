@@ -2,14 +2,11 @@ package io.github.stefan_ghioci.tools;
 
 import io.github.stefan_ghioci.processing.Color;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.Region;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,42 +38,16 @@ public class FXTools
 
     public static void showAlert(String title, String message, Alert.AlertType type)
     {
-        Alert alert = new Alert(type);
-
+        Alert alert = Styling.createAlert(type);
         alert.setHeaderText(title);
         alert.setContentText(message);
         alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 
+
         alert.showAndWait();
     }
 
-    public static ListCell<javafx.scene.paint.Color> createColorListCell()
-    {
-        return new ListCell<>()
-        {
-            @Override
-            protected void updateItem(javafx.scene.paint.Color color, boolean empty)
-            {
-                super.updateItem(color, empty);
-                if (!empty)
-                {
-                    Rectangle rectangle = new Rectangle(100, 20);
-                    rectangle.setFill(color);
-
-                    setGraphic(rectangle);
-                    setText(getColorCode(color));
-                    setFont(Font.font("Courier New"));
-                }
-                else
-                {
-                    setText(null);
-                    setGraphic(null);
-                }
-            }
-        };
-    }
-
-    private static String getColorCode(javafx.scene.paint.Color color)
+    public static String getColorCode(javafx.scene.paint.Color color)
     {
         return "#" + color.toString().substring(2, 8);
     }

@@ -24,8 +24,8 @@ public abstract class EvolutionaryAlgorithm
 
         List<Individual> population = generatePopulation(populationSize);
 
-        int iterationCounter = 1;
-        int stagnationTime = 1;
+        int iterationCounter = 0;
+        int stagnationTime = 0;
 
         population.forEach(Individual::evaluate);
 
@@ -52,7 +52,7 @@ public abstract class EvolutionaryAlgorithm
 
             Individual newBest = best(population);
 
-            if (iterationCounter != 1)
+            if (iterationCounter != 0)
             {
                 double improvement = calculateImprovement(newBest);
 
@@ -72,7 +72,7 @@ public abstract class EvolutionaryAlgorithm
             }
             else
             {
-                LOGGER.info("Iteration 1, initial best fitness {}", (int) newBest.getFitness());
+                LOGGER.info("First iteration, initial best fitness {}", (int) newBest.getFitness());
                 setLastBest(newBest);
             }
             iterationCounter++;

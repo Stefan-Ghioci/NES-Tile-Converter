@@ -5,15 +5,14 @@ import io.github.stefan_ghioci.navigation.base.StepView;
 import io.github.stefan_ghioci.processing.PreProcessing;
 import io.github.stefan_ghioci.tools.FXTools;
 import io.github.stefan_ghioci.tools.FileTools;
+import io.github.stefan_ghioci.tools.Styling;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -28,7 +27,7 @@ public class PreProcessingView extends StepView
     ColorPicker colorPicker;
     Button deleteButton;
     Button addButton;
-    Text paletteSizeText;
+    Label paletteSizeLabel;
     Button loadNESPaletteButton;
     Button loadBestPaletteButton;
     Button loadNESGrayscalePaletteButton;
@@ -44,68 +43,90 @@ public class PreProcessingView extends StepView
     @Override
     protected Pane initializeLeftPane()
     {
-        loadNESPaletteButton = new Button();
+
+        Label standardPaletteLabel = Styling.createLabel();
+        standardPaletteLabel.setText("Standard palettes");
+
+        loadNESPaletteButton = Styling.createDefaultButton();
         loadNESPaletteButton.setOnAction(event -> controller.handleLoadNESPalette());
         loadNESPaletteButton.setText("Load NES Palette");
 
-        loadBestPaletteButton = new Button();
+        loadBestPaletteButton = Styling.createDefaultButton();
         loadBestPaletteButton.setOnAction(event -> controller.handleLoadBestPalette());
         loadBestPaletteButton.setText("Load Best Palette");
 
 
-        loadNESGrayscalePaletteButton = new Button();
+        loadNESGrayscalePaletteButton = Styling.createDefaultButton();
         loadNESGrayscalePaletteButton.setOnAction(event -> controller.handleLoadNESGrayscalePalette());
         loadNESGrayscalePaletteButton.setText("Load Grayscale Palette");
 
-        ditheringChoiceBox = new ChoiceBox<>();
+        ditheringChoiceBox = Styling.createChoiceBox();
         ditheringChoiceBox.getItems().setAll(Stream.of(PreProcessing.Dithering.values())
                                                    .map(PreProcessing.Dithering::name)
                                                    .collect(Collectors.toList()));
         ditheringChoiceBox.getSelectionModel().select(0);
 
-        quantizeButton = new Button();
+        Label ditheringLabel = Styling.createLabel();
+        ditheringLabel.setText("Dithering");
+
+        quantizeButton = Styling.createPrimaryButton();
         quantizeButton.setOnAction(event -> controller.handleQuantization());
         quantizeButton.setText("Quantize Image");
         quantizeButton.setDisable(true);
 
-        return new VBox(loadNESPaletteButton,
-                        loadBestPaletteButton,
-                        loadNESGrayscalePaletteButton,
-                        ditheringChoiceBox,
-                        quantizeButton);
+        VBox vBox = Styling.createLeftControlsVBox();
+        vBox.getChildren().addAll(standardPaletteLabel,
+                                  loadNESPaletteButton,
+                                  loadBestPaletteButton,
+                                  loadNESGrayscalePaletteButton,
+                                  ditheringLabel,
+                                  ditheringChoiceBox,
+                                  quantizeButton);
+        return vBox;
     }
 
     @Override
     protected Pane initializeRightPane()
     {
-        paletteSizeText = new Text("Palette size: 0");
+        paletteSizeLabel = Styling.createLabel();
+        paletteSizeLabel.setText("Palette size: 0");
 
         palette = FXCollections.observableArrayList();
         palette.addListener((ListChangeListener<? super Color>) event -> controller.handlePaletteChanged());
 
-        paletteListView = new ListView<>();
+        paletteListView = Styling.createColorListView();
         paletteListView.setItems(palette);
         paletteListView.setEditable(false);
         paletteListView.setFocusTraversable(false);
-        paletteListView.setCellFactory(callback -> FXTools.createColorListCell());
         paletteListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         paletteListView.getSelectionModel()
                        .selectedItemProperty()
                        .addListener(listener -> controller.handleColorSelected());
 
-        colorPicker = new ColorPicker();
+        colorPicker = Styling.createColorPicker();
         colorPicker.setOnAction(event -> controller.handleAddButtonStatus());
         colorPicker.getCustomColors().addAll(FXTools.colorListToFXColorList(FileTools.loadNESPalette()));
 
-        addButton = new Button("Add");
+        addButton = Styling.createPrimaryButton();
+        addButton.setText("Add");
         addButton.setOnAction(event -> controller.handleAddPickedColor());
 
-        deleteButton = new Button("Delete");
+        deleteButton = Styling.createDefaultButton();
+        deleteButton.setText("Delete");
         deleteButton.setOnAction(event -> controller.handleDeleteSelectedColor());
         deleteButton.setDisable(true);
 
-        HBox topBox = new HBox(colorPicker, addButton, deleteButton);
+        Label colorControlsLabel = Styling.createLabel();
+        colorControlsLabel.setText("Color selection");
 
-        return new VBox(topBox, paletteListView, paletteSizeText);
+        VBox vBox = Styling.createRightControlsVBox();
+        vBox.getChildren().setAll(colorControlsLabel,
+                                  colorPicker,
+                                  addButton,
+                                  deleteButton,
+                                  paletteSizeLabel,
+                                  paletteListView);
+        return vBox;
     }
+
 }

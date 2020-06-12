@@ -57,10 +57,10 @@ public class ColorTools
                                            .map(Map.Entry::getKey)
                                            .collect(Collectors.toList());
 
-        if (forcedBlack && !bestPalette.contains(Color.black()))
+        if (forcedBlack && !bestPalette.contains(Color.BLACK))
         {
             bestPalette.remove(bestPalette.size() - 1);
-            bestPalette.add(Color.black());
+            bestPalette.add(Color.BLACK);
         }
 
         return bestPalette;

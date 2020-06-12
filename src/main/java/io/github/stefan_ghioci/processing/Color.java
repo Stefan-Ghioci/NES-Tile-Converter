@@ -5,10 +5,10 @@ import java.util.Objects;
 
 public class Color
 {
+    public static final Color BLACK = new Color(0, 0, 0);
     private final int red;
-
-    private final int blue;
     private final int green;
+    private final int blue;
 
     public Color(int red, int green, int blue)
     {
@@ -25,11 +25,6 @@ public class Color
         this.blue = rgb & 0xff;
     }
 
-    public static Color black()
-    {
-        return new Color(0, 0, 0);
-    }
-
     public static Color difference(Color oldColor, Color newColor)
     {
         return new Color(oldColor.red - newColor.red,
@@ -37,12 +32,8 @@ public class Color
                          oldColor.blue - newColor.blue);
     }
 
-    public static Color white()
-    {
-        return new Color(255, 255, 255);
-    }
 
-    public static Color gray(int value)
+    public static Color grayOf(int value)
     {
         return new Color(value, value, value);
     }
@@ -62,15 +53,6 @@ public class Color
     public int hashCode()
     {
         return Objects.hash(red, blue, green);
-    }
-
-    public int toInt()
-    {
-        int rgb;
-        rgb = red;
-        rgb = (rgb << 8) + green;
-        rgb = (rgb << 8) + blue;
-        return rgb;
     }
 
     public int getRed()

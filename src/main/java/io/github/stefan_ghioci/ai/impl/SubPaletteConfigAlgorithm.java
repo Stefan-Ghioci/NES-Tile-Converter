@@ -23,9 +23,9 @@ public class SubPaletteConfigAlgorithm extends EvolutionaryAlgorithm
     {
         this.colorMatrix = colorMatrix;
         this.palette = palette;
-        this.backgroundColor = forcedBlack ? Color.black() : palette.stream()
-                                                                    .min(Comparator.comparingDouble(Metrics::getLuminance))
-                                                                    .get();
+        this.backgroundColor = forcedBlack ? Color.BLACK : palette.stream()
+                                                                  .min(Comparator.comparingDouble(Metrics::getLuminance))
+                                                                  .get();
     }
 
     @Override
