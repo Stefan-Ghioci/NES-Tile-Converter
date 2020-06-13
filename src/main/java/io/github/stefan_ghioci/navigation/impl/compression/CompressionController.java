@@ -67,8 +67,15 @@ public class CompressionController extends StepController
                                                         LOGGER.info("Interrupting compression thread...");
                                                         thread.stop();
                                                         setButtonBehaviour(false);
+                                                        resetProgress();
                                                     });
         thread.start();
+    }
+
+    private void resetProgress()
+    {
+        view.compressionProgressBar.setProgress(0);
+        view.compressionCompletionLabel.setText("Completion: 0%");
     }
 
     private void setCompressedImage()
@@ -88,6 +95,7 @@ public class CompressionController extends StepController
 
         double progress = 1.0 * (initialTileCount - currentTileCount) / (initialTileCount - desiredTileCount);
         view.compressionProgressBar.setProgress(progress);
+        view.compressionCompletionLabel.setText("Completion: " + (int) (progress * 100) + "%");
     }
 
     private void setButtonBehaviour(boolean working)
@@ -105,5 +113,10 @@ public class CompressionController extends StepController
     {
         super.handleResetChanges();
         Compression.resetLastResult();
+    }
+
+    public void handleTileCountChanged()
+    {
+        view.tileSliderLabel.setText("Number of tiles: " + (int) view.tileSlider.getValue());
     }
 }

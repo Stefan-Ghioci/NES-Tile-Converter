@@ -71,7 +71,7 @@ public class Styling
     public static ProgressBar createProgressBar()
     {
         ProgressBar progressBar = new ProgressBar();
-        progressBar.getStyleClass().setAll("progress-bar", "progress-bar-info");
+        progressBar.getStyleClass().setAll("progress-bar", "progress-bar-info", "panel-info");
         return progressBar;
     }
 
@@ -222,7 +222,7 @@ public class Styling
         return listView;
     }
 
-    public static VBox createButtonGroupVBox()
+    public static VBox createLeftButtonGroupVBox()
     {
         VBox vBox = new VBox();
         vBox.setSpacing(10);
@@ -257,4 +257,15 @@ public class Styling
         rectangle.setStrokeWidth(1);
         return rectangle;
     }
+
+    public static Slider createValueSlider()
+    {
+        Slider slider = new Slider();
+        slider.setMaxWidth(150);
+        slider.setSnapToTicks(true);
+        slider.setShowTickMarks(true);
+        slider.setShowTickLabels(true);
+        return slider;
+    }
+
 }

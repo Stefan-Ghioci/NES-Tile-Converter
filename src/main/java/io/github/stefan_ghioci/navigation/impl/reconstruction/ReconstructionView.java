@@ -64,7 +64,7 @@ public class ReconstructionView extends StepView
 
         speedToggleGroup.selectToggle(standardButton);
 
-        VBox speedButtonVBox = Styling.createButtonGroupVBox();
+        VBox speedButtonVBox = Styling.createLeftButtonGroupVBox();
         speedButtonVBox.getChildren().setAll(slowButton, standardButton, fastButton);
 
         Label paletteTypeLabel = Styling.createLabel();
