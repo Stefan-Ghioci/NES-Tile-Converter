@@ -72,4 +72,17 @@ public class Conversion
         }
         return distinctTiles;
     }
+
+    public static Color[][] createPalette(List<List<Color>> subPaletteList)
+    {
+        int width = TILE_SIZE * SUB_PALETTE_SIZE;
+        int height = TILE_SIZE * SUB_PALETTE_COUNT;
+        Color[][] colorMatrix = new Color[width][height];
+
+        for (int y = 0; y < height; y++)
+            for (int x = 0; x < width; x++)
+                colorMatrix[x][y] = subPaletteList.get(y / TILE_SIZE).get(x / TILE_SIZE);
+
+        return colorMatrix;
+    }
 }

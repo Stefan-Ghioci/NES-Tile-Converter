@@ -77,6 +77,8 @@ public class ConversionController extends StepController
             FXTools.showAlert("Conversion Error", FileTools.loadText("skipped_reconstruction"), Alert.AlertType.ERROR);
             return;
         }
-        //todo
+
+        Color[][] palette = Conversion.createPalette(subPaletteList);
+        saveImage(FXTools.colorMatrixToImage(palette));
     }
 }

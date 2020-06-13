@@ -71,7 +71,7 @@ public class Styling
     public static ProgressBar createProgressBar()
     {
         ProgressBar progressBar = new ProgressBar();
-        progressBar.getStyleClass().setAll("progress-bar", "progress-bar-primary");
+        progressBar.getStyleClass().setAll("progress-bar", "progress-bar-info");
         return progressBar;
     }
 
