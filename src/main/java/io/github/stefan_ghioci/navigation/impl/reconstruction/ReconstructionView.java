@@ -11,7 +11,6 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Rectangle;
 
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -43,28 +42,35 @@ public class ReconstructionView extends StepView
     @Override
     protected Pane initializeLeftPane()
     {
+        Label speedSettingLabel = Styling.createLabel();
+        speedSettingLabel.setText("Speed setting");
+
         speedToggleGroup = new ToggleGroup();
 
-        RadioButton slowButton = new RadioButton();
+        RadioButton slowButton = Styling.createRadioButton();
         slowButton.setUserData(Reconstruction.Speed.Slow);
         slowButton.setText("Slow (precise)");
         slowButton.setToggleGroup(speedToggleGroup);
 
-        RadioButton standardButton = new RadioButton();
+        RadioButton standardButton = Styling.createRadioButton();
         standardButton.setUserData(Reconstruction.Speed.Standard);
         standardButton.setText("Standard");
         standardButton.setToggleGroup(speedToggleGroup);
 
-        RadioButton fastButton = new RadioButton();
+        RadioButton fastButton = Styling.createRadioButton();
         fastButton.setUserData(Reconstruction.Speed.Fast);
         fastButton.setText("Fast (causes artifacts)");
         fastButton.setToggleGroup(speedToggleGroup);
 
         speedToggleGroup.selectToggle(standardButton);
 
-        VBox speedButtonVBox = new VBox(slowButton, standardButton, fastButton);
+        VBox speedButtonVBox = Styling.createButtonGroupVBox();
+        speedButtonVBox.getChildren().setAll(slowButton, standardButton, fastButton);
 
-        paletteTypeChoiceBox = new ChoiceBox<>();
+        Label paletteTypeLabel = Styling.createLabel();
+        paletteTypeLabel.setText("Palette choice");
+
+        paletteTypeChoiceBox = Styling.createChoiceBox();
         paletteTypeChoiceBox.getItems().setAll(Stream.of(Reconstruction.Palette.values())
                                                      .map(Reconstruction.Palette::name)
                                                      .collect(Collectors.toList()));
@@ -72,6 +78,9 @@ public class ReconstructionView extends StepView
 
         blackBackgroundColorCheckBox = new CheckBox();
         blackBackgroundColorCheckBox.setText("Force black as background color");
+
+        Label runLabel = Styling.createLabel();
+        runLabel.setText("Run");
 
         reconstructButton = Styling.createPrimaryButton();
         reconstructButton.setText("Reconstruct");
@@ -81,36 +90,36 @@ public class ReconstructionView extends StepView
         stopReconstructionButton.setText("Stop");
         stopReconstructionButton.setDisable(true);
 
-        return new VBox(paletteTypeChoiceBox,
-                        speedButtonVBox,
-                        blackBackgroundColorCheckBox,
-                        reconstructButton,
-                        stopReconstructionButton);
+        VBox vBox = Styling.createLeftControlsVBox();
+        vBox.getChildren().setAll(paletteTypeLabel,
+                                  paletteTypeChoiceBox,
+                                  blackBackgroundColorCheckBox,
+                                  speedSettingLabel,
+                                  speedButtonVBox,
+                                  runLabel,
+                                  reconstructButton,
+                                  stopReconstructionButton);
+        return vBox;
     }
 
     @Override
     protected Pane initializeRightPane()
     {
-        paletteVBox = new VBox();
+        paletteVBox = Styling.createRightControlsVBox();
 
         for (int i = 0; i < Constants.SUB_PALETTE_COUNT; i++)
         {
-            HBox subPaletteHBox = new HBox();
+            HBox hBox = Styling.createColorHBox();
             for (int j = 0; j < Constants.SUB_PALETTE_SIZE; j++)
-            {
-                Rectangle rectangle = new Rectangle(20, 20);
+                hBox.getChildren().add(Styling.createColorRectangle());
 
-                subPaletteHBox.getChildren().add(rectangle);
-            }
-            subPaletteHBox.setSpacing(5);
-
-            Label subPaletteLabel = new Label();
+            Label subPaletteLabel = Styling.createLabel();
             subPaletteLabel.setText("Sub Palette " + i);
-            subPaletteLabel.setLabelFor(subPaletteHBox);
 
-            paletteVBox.getChildren().addAll(subPaletteLabel, subPaletteHBox);
+            paletteVBox.getChildren().addAll(subPaletteLabel, hBox);
         }
 
         return paletteVBox;
     }
+
 }

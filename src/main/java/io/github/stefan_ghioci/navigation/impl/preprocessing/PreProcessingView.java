@@ -75,12 +75,17 @@ public class PreProcessingView extends StepView
         quantizeButton.setDisable(true);
 
         VBox vBox = Styling.createLeftControlsVBox();
+
+        Label runLabel = Styling.createLabel();
+        runLabel.setText("Run");
+
         vBox.getChildren().addAll(standardPaletteLabel,
                                   loadNESPaletteButton,
                                   loadBestPaletteButton,
                                   loadNESGrayscalePaletteButton,
                                   ditheringLabel,
                                   ditheringChoiceBox,
+                                  runLabel,
                                   quantizeButton);
         return vBox;
     }
@@ -88,6 +93,9 @@ public class PreProcessingView extends StepView
     @Override
     protected Pane initializeRightPane()
     {
+        Label colorControlsLabel = Styling.createLabel();
+        colorControlsLabel.setText("Color selection");
+
         paletteSizeLabel = Styling.createLabel();
         paletteSizeLabel.setText("Palette size: 0");
 
@@ -116,8 +124,6 @@ public class PreProcessingView extends StepView
         deleteButton.setOnAction(event -> controller.handleDeleteSelectedColor());
         deleteButton.setDisable(true);
 
-        Label colorControlsLabel = Styling.createLabel();
-        colorControlsLabel.setText("Color selection");
 
         VBox vBox = Styling.createRightControlsVBox();
         vBox.getChildren().setAll(colorControlsLabel,

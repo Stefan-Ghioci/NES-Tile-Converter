@@ -95,10 +95,12 @@ public class CompressionView extends StepView
         interruptCompressionButton.setText("Interrupt");
         interruptCompressionButton.setDisable(true);
 
-        return new VBox(compressionTypeLabel,
-                        compressionTypeVBox,
-                        compressButton,
-                        compressionProgressBar,
-                        interruptCompressionButton);
+        VBox vBox = Styling.createLeftControlsVBox();
+        vBox.getChildren().setAll(compressionTypeLabel,
+                                  compressionTypeVBox,
+                                  compressButton,
+                                  compressionProgressBar,
+                                  interruptCompressionButton);
+        return vBox;
     }
 }

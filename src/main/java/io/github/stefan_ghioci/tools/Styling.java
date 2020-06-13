@@ -2,6 +2,7 @@ package io.github.stefan_ghioci.tools;
 
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
+import javafx.geometry.NodeOrientation;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -11,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.StrokeType;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -218,5 +220,41 @@ public class Styling
         setSize(listView, 100, 150);
         listView.setMaxWidth(100);
         return listView;
+    }
+
+    public static VBox createButtonGroupVBox()
+    {
+        VBox vBox = new VBox();
+        vBox.setSpacing(10);
+        return vBox;
+    }
+
+    public static RadioButton createRadioButton()
+    {
+        RadioButton radioButton = new RadioButton();
+        radioButton.getStyleClass().setAll("btn", "btn-xs", "btn-default");
+        return radioButton;
+    }
+
+
+    public static HBox createColorHBox()
+    {
+        HBox hBox = new HBox();
+        hBox.setSpacing(5);
+        hBox.setAlignment(Pos.CENTER_LEFT);
+        hBox.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
+        return hBox;
+    }
+
+    public static Rectangle createColorRectangle()
+    {
+        Rectangle rectangle = new Rectangle(40, 25);
+        rectangle.setFill(Color.BLACK);
+        rectangle.setArcWidth(10);
+        rectangle.setArcHeight(10);
+        rectangle.setStrokeType(StrokeType.INSIDE);
+        rectangle.setStroke(Color.GRAY);
+        rectangle.setStrokeWidth(1);
+        return rectangle;
     }
 }

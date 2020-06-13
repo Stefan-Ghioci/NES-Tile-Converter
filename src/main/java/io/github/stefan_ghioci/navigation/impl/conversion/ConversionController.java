@@ -67,4 +67,16 @@ public class ConversionController extends StepController
 
         saveImage(FXTools.colorMatrixToImage(tileSet));
     }
+
+    public void handleSavePalette()
+    {
+        List<List<Color>> subPaletteList = Reconstruction.getLastResult();
+
+        if (subPaletteList == null)
+        {
+            FXTools.showAlert("Conversion Error", FileTools.loadText("skipped_reconstruction"), Alert.AlertType.ERROR);
+            return;
+        }
+        //todo
+    }
 }
