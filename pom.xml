@@ -56,14 +56,6 @@
                     <mainClass>io.github.stefan_ghioci.App</mainClass>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>com.zenjava</groupId>
-                <artifactId>javafx-maven-plugin</artifactId>
-                <version>8.8.3</version>
-                <configuration>
-                    <mainClass>your.package.with.Launcher</mainClass>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
 </project>
