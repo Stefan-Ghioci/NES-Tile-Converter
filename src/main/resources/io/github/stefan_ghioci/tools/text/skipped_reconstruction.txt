@@ -1,2 +1,1 @@
-You must first reconstruct your image, in order to obtain a sub-palette for each tile group.
-Go back and click the "Reconstruct" button with your preferred settings.
+You must first reconstruct your image, in order to obtain a sub-palette for each tile group. Go back and click the "Reconstruct" button with your preferred settings.

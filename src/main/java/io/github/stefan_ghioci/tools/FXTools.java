@@ -6,7 +6,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
-import javafx.scene.layout.Region;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,12 +37,7 @@ public class FXTools
 
     public static void showAlert(String title, String message, Alert.AlertType type)
     {
-        Alert alert = Styling.createAlert(type);
-        alert.setHeaderText(title);
-        alert.setContentText(message);
-        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-
-
+        Alert alert = Styling.createAlert(type, title, message);
         alert.showAndWait();
     }
 

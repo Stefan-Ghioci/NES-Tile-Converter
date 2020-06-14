@@ -11,7 +11,7 @@ import static io.github.stefan_ghioci.processing.Constants.TILE_SIZE;
 public class PreProcessing
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(PreProcessing.class.getSimpleName());
-    private static double[][] thresholdMap =
+    private static final double[][] thresholdMap =
             {
                     { 36, 55, 2, 21, 32, 51, 6, 17 },
                     { 56, 11, 30, 41, 60, 15, 26, 45 },

@@ -11,7 +11,7 @@ import javafx.scene.layout.VBox;
 
 public class ConversionView extends StepView
 {
-    private ConversionController controller;
+    private final ConversionController controller;
 
     public ConversionView(StepController controller)
     {

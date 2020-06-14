@@ -1,2 +1,1 @@
-You must first compress your image, in order to extract a set of tiles.
-Go back and click the "Compress" button with your preferred settings.
+You must first compress your image, in order to extract a set of tiles. Go back and click the "Compress" button with your preferred settings.

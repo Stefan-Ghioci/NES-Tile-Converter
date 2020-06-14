@@ -143,12 +143,14 @@ public class Styling
         return vBox;
     }
 
-    public static Alert createAlert(Alert.AlertType type)
+    public static Alert createAlert(Alert.AlertType type, String title, String message)
     {
         Alert alert = new Alert(type);
+        alert.setHeaderText(title);
+        alert.setContentText(message);
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
         alert.getDialogPane().getScene().getStylesheets().add("org/kordamp/bootstrapfx/bootstrapfx.css");
         ((Stage) alert.getDialogPane().getScene().getWindow()).initStyle(StageStyle.UNDECORATED);
-        //todo: stylise based on alert type
         return alert;
     }
 
