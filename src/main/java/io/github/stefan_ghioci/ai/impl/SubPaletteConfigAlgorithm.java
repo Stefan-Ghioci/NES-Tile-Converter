@@ -61,7 +61,7 @@ public class SubPaletteConfigAlgorithm extends EvolutionaryAlgorithm
                                                                        ((SubPaletteConfig) father).getSubPaletteList());
 
         for (int i = 0; i < Constants.SUB_PALETTE_COUNT; i++)
-            subPaletteList.add(getRandomElement(parentsSubPaletteLists).get(0));
+            subPaletteList.add(getRandomElement(parentsSubPaletteLists).get(i));
 
         return new SubPaletteConfig(subPaletteList, colorMatrix);
     }

@@ -19,7 +19,7 @@ public class SubPaletteConfig implements Individual
 {
     private final List<List<Color>> subPaletteList;
     private final Color[][] colorMatrix;
-    private double totalDistance;
+    private double averageDistance;
 
     public SubPaletteConfig(List<List<Color>> subPaletteList, Color[][] colorMatrix)
     {
@@ -30,7 +30,7 @@ public class SubPaletteConfig implements Individual
     @Override
     public double getFitness()
     {
-        return totalDistance;
+        return averageDistance;
     }
 
     @Override
@@ -39,7 +39,7 @@ public class SubPaletteConfig implements Individual
         int width = colorMatrix.length;
         int height = colorMatrix[0].length;
 
-        totalDistance = 0;
+        averageDistance = 0;
 
         List<Color>[][] mapping = ColorTools.computeBestSubPaletteMapping(colorMatrix, subPaletteList);
 
@@ -48,11 +48,13 @@ public class SubPaletteConfig implements Individual
             {
                 List<Color> bestSubPalette = mapping[x / TILE_GROUP_SIZE][y / TILE_GROUP_SIZE];
 
-                Color color1 = this.colorMatrix[x][y];
+                Color color1 = colorMatrix[x][y];
                 Color color2 = bestMatch(color1, bestSubPalette);
 
-                totalDistance += distanceBetween(color1, color2);
+                averageDistance += distanceBetween(color1, color2);
             }
+
+        averageDistance /= (width * height);
     }
 
     @Override

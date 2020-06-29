@@ -46,17 +46,17 @@ public class Reconstruction
             case Slow:
                 populationSize = 50;
                 stagnationFactor = 2500;
-                mutationChance = 0.5;
+                mutationChance = 0.1;
                 break;
             case Standard:
-                populationSize = 100;
-                stagnationFactor = 1000;
+                populationSize = 50;
+                stagnationFactor = 500;
                 mutationChance = 0.25;
                 break;
             case Fast:
-                populationSize = 200;
+                populationSize = 100;
                 stagnationFactor = 500;
-                mutationChance = 0.1;
+                mutationChance = 0.5;
                 break;
             default:
                 throw new IllegalStateException("Unexpected speed setting: " + speed);
