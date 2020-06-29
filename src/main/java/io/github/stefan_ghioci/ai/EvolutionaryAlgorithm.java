@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static io.github.stefan_ghioci.tools.Miscellaneous.formatDouble;
 import static io.github.stefan_ghioci.tools.Miscellaneous.getRandomElement;
 
 public abstract class EvolutionaryAlgorithm
@@ -29,7 +30,10 @@ public abstract class EvolutionaryAlgorithm
 
         population.forEach(Individual::evaluate);
 
-        while (stagnationTime < stagnationFactor)
+        setLastBest(best(population));
+        LOGGER.info("Initial best fitness: {}", formatDouble(lastBest.getFitness()));
+
+        while (stagnationTime < stagnationFactor || lastBest.getFitness() == 0)
         {
             Individual mother = select(population);
             Individual father = select(population);
@@ -52,40 +56,33 @@ public abstract class EvolutionaryAlgorithm
 
             Individual newBest = best(population);
 
-            if (iterationCounter != 0)
-            {
-                double improvement = calculateImprovement(newBest);
+            double improvement = calculateImprovement(newBest);
 
-                if (improvement != 0)
-                {
-                    LOGGER.info("Iteration {}, best fitness {} with {}% improvement",
-                                iterationCounter,
-                                (int) newBest.getFitness(),
-                                improvement);
-                    setLastBest(newBest);
-                    stagnationTime = 1;
-                }
-                else
-                {
-                    stagnationTime++;
-                }
+            if (improvement != 0)
+            {
+                LOGGER.info("Iteration {}, best fitness {} with {}% improvement",
+                            iterationCounter,
+                            formatDouble(newBest.getFitness()),
+                            formatDouble(improvement));
+                setLastBest(newBest);
+                stagnationTime = 1;
             }
             else
             {
-                LOGGER.info("First iteration, initial best fitness {}", (int) newBest.getFitness());
-                setLastBest(newBest);
+                stagnationTime++;
             }
+
             iterationCounter++;
         }
 
         LOGGER.info("Algorithm ran for {} iterations, last best fitness {}",
                     iterationCounter,
-                    (int) lastBest.getFitness());
+                    formatDouble(lastBest.getFitness()));
     }
 
-    private float calculateImprovement(Individual newBest)
+    private double calculateImprovement(Individual newBest)
     {
-        return (float) ((lastBest.getFitness() - newBest.getFitness()) / lastBest.getFitness() * 100);
+        return ((lastBest.getFitness() - newBest.getFitness()) / lastBest.getFitness() * 100);
     }
 
 
