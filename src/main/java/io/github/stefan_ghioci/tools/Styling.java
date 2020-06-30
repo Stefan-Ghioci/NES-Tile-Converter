@@ -148,9 +148,9 @@ public class Styling
         Alert alert = new Alert(type);
         alert.setHeaderText(title);
         alert.setContentText(message);
-        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
         alert.getDialogPane().getScene().getStylesheets().add("org/kordamp/bootstrapfx/bootstrapfx.css");
         ((Stage) alert.getDialogPane().getScene().getWindow()).initStyle(StageStyle.UNDECORATED);
+        alert.getDialogPane().setMinHeight(250);
         return alert;
     }
 
