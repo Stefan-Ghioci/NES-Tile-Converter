@@ -3,7 +3,6 @@ package io.github.stefan_ghioci.ai.impl;
 import io.github.stefan_ghioci.ai.EvolutionaryAlgorithm;
 import io.github.stefan_ghioci.ai.Individual;
 import io.github.stefan_ghioci.processing.Color;
-import io.github.stefan_ghioci.processing.Constants;
 import io.github.stefan_ghioci.tools.Metrics;
 
 import java.util.ArrayList;
@@ -11,6 +10,8 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
+import static io.github.stefan_ghioci.processing.Constants.SUB_PALETTE_COUNT;
+import static io.github.stefan_ghioci.processing.Constants.SUB_PALETTE_SIZE;
 import static io.github.stefan_ghioci.tools.Miscellaneous.getRandomElement;
 
 public class SubPaletteConfigAlgorithm extends EvolutionaryAlgorithm
@@ -34,12 +35,12 @@ public class SubPaletteConfigAlgorithm extends EvolutionaryAlgorithm
         List<List<Color>> subPaletteList = new ArrayList<>();
 
 
-        for (int i = 0; i < Constants.SUB_PALETTE_COUNT; i++)
+        for (int i = 0; i < SUB_PALETTE_COUNT; i++)
         {
             List<Color> subPalette = new ArrayList<>();
 
             subPalette.add(0, backgroundColor);
-            while (subPalette.size() < Constants.SUB_PALETTE_SIZE)
+            while (subPalette.size() < SUB_PALETTE_SIZE)
             {
                 Color color = getRandomElement(palette);
                 if (!subPalette.contains(color))
@@ -60,8 +61,14 @@ public class SubPaletteConfigAlgorithm extends EvolutionaryAlgorithm
         List<List<List<Color>>> parentsSubPaletteLists = Arrays.asList(((SubPaletteConfig) mother).getSubPaletteList(),
                                                                        ((SubPaletteConfig) father).getSubPaletteList());
 
-        for (int i = 0; i < Constants.SUB_PALETTE_COUNT; i++)
-            subPaletteList.add(getRandomElement(parentsSubPaletteLists).get(i));
+        for (int i = 0; i < SUB_PALETTE_COUNT; i++)
+        {
+            List<Color> subPalette = new ArrayList<>();
+            for (int j = 0; j < SUB_PALETTE_SIZE; j++)
+                subPalette.add(getRandomElement(parentsSubPaletteLists).get(i).get(j));
+
+            subPaletteList.add(subPalette);
+        }
 
         return new SubPaletteConfig(subPaletteList, colorMatrix);
     }

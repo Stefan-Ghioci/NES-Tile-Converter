@@ -44,6 +44,7 @@ public class Compression
                 super.merge(clusters, minLinkageCluster1, minLinkageCluster2);
                 Compression.LOGGER.info("Clusters merged, calling update function...");
                 currentTileCount = clusters.size();
+                lastResult = compressTiles(colorMatrix, clusters, type);
                 try
                 {
                     update.call();
@@ -55,9 +56,9 @@ public class Compression
             }
         };
         List<Tile> tiles = ColorTools.colorMatrixToTiles(colorMatrix, subPaletteList);
-        List<List<Tile>> clusteredTiles = clusteringAlgorithm.run(tiles, desiredTileCount);
+        clusteringAlgorithm.run(tiles, desiredTileCount);
 
-        lastResult = compressTiles(colorMatrix, clusteredTiles, type);
+//        lastResult = compressTiles(colorMatrix, clusteredTiles, type);
     }
 
     private static List<Tile> compressTiles(Color[][] colorMatrix, List<List<Tile>> clusteredTiles, Type type)

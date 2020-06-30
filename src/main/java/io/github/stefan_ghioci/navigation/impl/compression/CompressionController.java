@@ -54,11 +54,14 @@ public class CompressionController extends StepController
                                                             type,
                                                             () ->
                                                             {
-                                                                Platform.runLater(() -> update(desiredTileCount));
+                                                                Platform.runLater(() ->
+                                                                                  {
+                                                                                      setCompressedImage();
+                                                                                      update(desiredTileCount);
+                                                                                  });
                                                                 return null;
                                                             });
                                        LOGGER.info("Compression finished");
-                                       setCompressedImage();
                                        setButtonBehaviour(false);
                                    });
 
@@ -74,6 +77,8 @@ public class CompressionController extends StepController
 
     private void resetProgress()
     {
+        Compression.resetLastResult();
+        view.setImage(view.getInitialImage());
         view.compressionProgressBar.setProgress(0);
         view.compressionCompletionLabel.setText("Completion: 0%");
     }
